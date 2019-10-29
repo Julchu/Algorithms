@@ -70,3 +70,49 @@ print(twoSum(nums, target))
 # 	print("no")
 # if 3 in a.values():
 # 	print("yes")
+
+from typing import List
+class Solution:
+    def twoSum1(self, nums: List[int], target: int) -> List[int]:
+        n = len(nums)
+        if n < 1:
+            return
+        elif n == 1:
+            if nums[0] + nums[1] == target:
+                return [0, 1]
+        else:
+            i = 0
+            j = 1
+            while i < n - 2:
+                while j < n-1:
+                    if nums[i] + nums[j] == target:
+                        return [i, j]
+                    else:
+                        j += 1
+                i += 1
+        return
+
+    def twoSum2(self, nums: List[int], target: int) -> List[int]:
+        # nums2 = {}
+        nums3 = {}
+        # for n in nums:
+        #     nums2[n] = 0
+        for n in nums:
+            if not nums3.get(3):
+            # if not nums3.get[target - n]:
+                nums3[target - n] = 0
+        for n in nums:
+            if nums3[target-n]:
+                return [n, target-n]
+
+nums = [2, 7, 11, 15]
+# S = Solution()
+
+# print(S.twoSum1(nums, 9))
+# print(S.twoSum2(nums, 9))
+
+# a = {}
+# a[2] = 3
+# print(a)
+# if not a.get(3):
+#     print("no")
