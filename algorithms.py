@@ -25,8 +25,6 @@ graph[2] = [0]
 graph[2].append(3)
 graph[3] = [3]
 
-# print(graph)
-
 def BFS(graph, s):
 		visited = [False] * (len(graph))
 		queue = []
@@ -44,32 +42,39 @@ def BFS(graph, s):
 
 # BFS(graph, 2)
 
-nums = [10, 2, 2, 6, 4, 4]
-target = 5
-def twoSum(nums, target):
-	d = {}
-	solution = []
-	for n in nums:
-		d[n] = target-n
-	n = 0
-	while not solution:
-		if d.get(d[n]):
-			solution = [n, d[n]]
-		else:
-			n += 1
-	return solution
+def DFSUtil(self, v, visited): 
+    visited[v] = True
+    print(v, end = ' ') 
 
-print(twoSum(nums, target))
+    for i in self.graph[v]: 
+        if visited[i] == False: 
+            self.DFSUtil(i, visited) 
 
-# {-5: 10, 3: 2, 0: 5, -1: 6, 2: 3, -3: 8}
-# {10: -5, 2: 3, 5: 0, 6: -1, 3: 2, 8: -3}
+def DFS(self, v): 
+    visited = [False] * (len(self.graph)) 
+    self.DFSUtil(v, visited) 
 
-# a = {5: 3}
 
-# if not a.get(3):
-# 	print("no")
-# if 3 in a.values():
-# 	print("yes")
+
+# DFS(graph, start_node, end_node):
+#     frontier = new Stack()
+#     frontier.push(start_node)
+#     explored = new Set()    while frontier is not empty:
+#         current_node = frontier.pop()
+#         if current_node in explored: continue
+#         if current_node == end_node: return success
+        
+#         for neighbor in graph.get_neigbhors(current_node):
+#             frontier.push(neighbor)        explored.add(current_node)
+
+graph = {}
+g[0] = [1]
+g[0].append(2)
+g[1] = [2]
+g[2] = [0]
+g[2].append(3)
+g[3] = [3]
+
 
 from typing import List
 class Solution:
@@ -93,26 +98,28 @@ class Solution:
         return
 
     def twoSum2(self, nums: List[int], target: int) -> List[int]:
-        # nums2 = {}
         nums3 = {}
-        # for n in nums:
-        #     nums2[n] = 0
         for n in nums:
             if not nums3.get(3):
-            # if not nums3.get[target - n]:
                 nums3[target - n] = 0
         for n in nums:
             if nums3[target-n]:
                 return [n, target-n]
 
-nums = [2, 7, 11, 15]
-# S = Solution()
+    def twoSum(self, nums, target):
+        d = {}
+        solution = []
+        for n in nums:
+            d[n] = target-n
+        n = 0
+        while not solution:
+            if d.get(d[n]):
+                solution = [n, d[n]]
+            else:
+                n += 1
+        return solution
 
-# print(S.twoSum1(nums, 9))
-# print(S.twoSum2(nums, 9))
+# nums = [10, 2, 2, 6, 4, 4]
+# target = 5
 
-# a = {}
-# a[2] = 3
-# print(a)
-# if not a.get(3):
-#     print("no")
+# print(Solution.twoSum(nums, target))
