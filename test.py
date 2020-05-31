@@ -1,20 +1,23 @@
+# typing module needed for dictionaries (Lists)
 from typing import List
-def containsDuplicate(self, nums: List[int]) -> bool:
-	# Brute Force: 1 inner for loops
-	# for i in range(len(nums)):
-	#     count = 0
-	#     for j in range(len(nums)):
-	#         if nums[i] == nums[k]:
-	#             count += 1
-	# if count > 1:
-	#     return true
 
-	# Somewhat optimized: 2 for loops, no nesting; dictionary
-	numsDict = {}
-	for i in range(len(nums)):
-		if numsDict[nums[i]]:
-			return False
-		else: 
-			numsDict[nums[i]] = 1
-		
-			
+def productExceptSelf(nums: List[int]) -> List[int]:
+	n = len(nums)
+	L = [0] * n
+	R = [0] * n
+	output = [0] * n
+
+	L[0] = 1
+	R[n-1] = 1
+	for i in range(1, n):
+		L[i] = nums[i - 1] * L[i - 1]
+	
+	for i in range(n-2, -1, -1):
+		R[i] = nums[i + 1] * R[i + 1]
+	
+	for i in range(n):
+		output[i] = L[i] * R[i]
+	return output
+nums = [1, 2, 3, 4]
+print(productExceptSelf(nums))
+
