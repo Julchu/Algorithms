@@ -1,23 +1,61 @@
 # typing module needed for dictionaries (Lists)
 from typing import List
 
-def productExceptSelf(nums: List[int]) -> List[int]:
-	n = len(nums)
-	L = [0] * n
-	R = [0] * n
-	output = [0] * n
+def lengthOfLongestSubstring(s: str) -> int:
+	substrings = []
+	substringLengths = []
+	exists = {}
+	a = ""
+	output = 0
 
-	L[0] = 1
-	R[n-1] = 1
-	for i in range(1, n):
-		L[i] = nums[i - 1] * L[i - 1]
-	
-	for i in range(n-2, -1, -1):
-		R[i] = nums[i + 1] * R[i + 1]
-	
-	for i in range(n):
-		output[i] = L[i] * R[i]
+	for i in s:
+		if not exists.get(i):
+			exists[i] = "yes"
+			a = a + i
+		else:
+			substrings.append(a)
+			substringLengths.append(len(a))
+			a = i
+	substrings.append(a)
+	substringLengths.append(len(a))
+	min = 0
+	index = 0
+	if len(substringLengths) > 0:
+		for i in range(len(substringLengths)):
+			if substringLengths[i] > min:
+				min = substringLengths[i]
+				index = i
+		output = len(substrings[index])
 	return output
-nums = [1, 2, 3, 4]
-print(productExceptSelf(nums))
 
+print(lengthOfLongestSubstring(s))
+
+
+# def lengthOfLongestSubstring(s: str) -> int:
+# 	n = len(s)
+# 	ans = 0
+# 	index = 0
+# 	j = 0
+# 	if n > 0:
+# 		max = s[j]
+# 	for i in range(n):
+		
+		
+# 		i
+		
+# 		if ans <  j - i + 1:
+# 		ans = j - i + 1
+# 		a
+
+
+# public int lengthOfLongestSubstring(String s) {
+# 	int n = s.length(), ans = 0;
+# 	int[] index = new int[128]; // current index of character
+# 	// try to extend the range [i, j]
+# 	for (int j = 0, i = 0; j < n; j++) {
+# 		i = Math.max(index[s.charAt(j)], i);
+# 		ans = Math.max(ans, j - i + 1);
+# 		index[s.charAt(j)] = j + 1;
+# 	}
+# 	return ans;
+# }

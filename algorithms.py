@@ -85,12 +85,83 @@ graph[3] = [3]
 	Given array of integers, return indices of the two numbers such that they add up to a specific target.
 	You may assume that each input would have exactly one solution, and you may not use the same element twice.
 """
-def twoSum(nums: List[int], target: int) -> List[int]:
-	diff = {}
-	for i in range(len(nums)):
-		if diff.get(target - nums[i]):
-			return [diff.get(target - nums[i]), i]
-		diff[nums[i]] =  i
+	def twoSum(nums: List[int], target: int) -> List[int]:
+		diff = {}
+		for i in range(len(nums)):
+			if diff.get(target - nums[i]):
+				return [diff.get(target - nums[i]), i]
+			diff[nums[i]] =  i
+
+# 3 Longest Substring Without Repeating Characters
+	def lengthOfLongestSubstring(s: str) -> int:
+		substrings = []
+		substringLengths = []
+		exists = {}
+		a = ""
+		output = 0
+
+		for i in s:
+			if not exists.get(i):
+				exists[i] = "yes"
+				a = a + i
+			else:
+				substrings.append(a)
+				substringLengths.append(len(a))
+				a = i
+		substrings.append(a)
+		substringLengths.append(len(a))
+		min = 0
+		index = 0
+		if len(substringLengths) > 0:
+			for i in range(len(substringLengths)):
+				if substringLengths[i] > min:
+					min = substringLengths[i]
+					index = i
+			output = len(substrings[index])
+		return output
+
+	print(lengthOfLongestSubstring(s))
+
+
+	# def lengthOfLongestSubstring(s: str) -> int:
+	# 	n = len(s)
+	# 	ans = 0
+	# 	index = 0
+	# 	j = 0
+	# 	if n > 0:
+	# 		max = s[j]
+	# 	for i in range(n):
+			
+			
+	# 		i
+			
+	# 		if ans <  j - i + 1:
+	# 		ans = j - i + 1
+	# 		a
+
+
+	# public int lengthOfLongestSubstring(String s) {
+	# 	int n = s.length(), ans = 0;
+	# 	int[] index = new int[128]; // current index of character
+	# 	// try to extend the range [i, j]
+	# 	for (int j = 0, i = 0; j < n; j++) {
+	# 		i = Math.max(index[s.charAt(j)], i);
+	# 		ans = Math.max(ans, j - i + 1);
+	# 		index[s.charAt(j)] = j + 1;
+	# 	}
+	# 	return ans;
+	# }
+
+# 121. Best Time to Buy and Sell Stock
+	def maxProfit(prices: List[int]) -> int:
+		min = 9999999999999999
+		max = 0
+		for i in range(len(prices)):
+			if prices[i] < min:
+				min = prices[i]
+			elif (prices[i] - min > max):
+				max = prices[i] - min
+		return max
 
 # 217 Contains Duplicates
 	def containsDuplicate(self, nums: List[int]) -> bool:
@@ -148,3 +219,6 @@ def twoSum(nums: List[int], target: int) -> List[int]:
             R *= nums[i]
         
         return answer
+
+# 53. Maximum Subarray
+	
