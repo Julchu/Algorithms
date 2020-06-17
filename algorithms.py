@@ -41,7 +41,6 @@ def BFS(graph, s):
 					queue.append(i) 
 					visited[i] = True
 		print()
-
 # BFS(graph, 2)
 
 def DFSUtil(self, v, visited): 
@@ -120,9 +119,48 @@ graph[3] = [3]
 			output = len(substrings[index])
 		return output
 
-	print(lengthOfLongestSubstring(s))
+# 20. Valid Parentheses
+	def isValid(s: str) -> bool:
+		current = []
+		n = len(s)
+		# Odd # of characters
+		if n % 2 != 0:
+			return False
 
+		for i in s:
+			if i == "(" or i == "{" or i == "[":
+				current.append(i)
+			elif len(current) > 0: 
+				if current[-1] == "(" and i == ")":
+					current.pop()
+				elif current[-1] == "{" and i == "}":
+					current.pop()
+				elif current[-1] == "[" and i == "]":
+					current.pop()
+		if len(current) > 0:
+			return False
+		return True
 
+# 125. Valid Palindrome
+	newString = ""
+	l = []
+	r = []
+		
+	for i in s:
+		if i.isalnum():
+			newString = newString + i
+	
+	n = len(newString)
+
+	for i in range(n//2):
+		l.append(newString[i].lower())
+		r.append(newString[n-i-1].lower())
+	for i in range(len(l)):
+		if l[i] != r[i]:
+			return False
+	return True
+
+	
 	# def lengthOfLongestSubstring(s: str) -> int:
 	# 	n = len(s)
 	# 	ans = 0
@@ -221,4 +259,69 @@ graph[3] = [3]
         return answer
 
 # 53. Maximum Subarray
+
+# 997.  Find the Town Judge
+	def findJudge(N: int, trust: List[List[int]]) -> int:
+		judge = -1
+		if N == 1 and len(trust) == 0:
+			judge = N
+		if len(trust) > 0:
+			people = {}
+			for i in trust:
+				if people.get(i[1]):
+					people[i[1]] += 1
+				else:
+					people[i[1]] = 1
+			found = False
+			for key in people:
+				if people[key] == N-1:
+					judge = key
+			
+			for i in trust:
+				if i[0] == judge:
+					judge = -1
+		return judge
+
+# TopHat Interview
+def isAnagram(string1, string2):
+	exists = {}
+	for i in string1:
+		if exists.get(i):
+			exists[i] += 1
+		else:
+			exists[i] = 1
 	
+	for i in string2:
+		if exists.get(i):
+			if exists.get(i, 0) > 1:
+				exists[i] -= 1
+			elif exists.get(i) == 1:
+				exists.pop(i)
+		else:
+			return False
+	return True
+
+def numFields(fields):
+	# stack = [] # append/pop
+	counter = 0
+	for i in range(len(fields)):
+		for j in range(len(fields[i])):
+			if fields[i][j] == True:
+				counter += 1
+				visited(i, j)
+
+def visited(i, j):
+	fields[i][j] = False:
+	if j < len(fields[0]) and fields[i][j+1] == True:
+		visited(i, j+1)
+	if j > 0 and fields[i][j-1] == True:
+		visited(i, j-1)
+	if i < len(fields) and fields[i+1][j] == True:
+		visited(i+1, j)
+	if i > 0 and fields[i-1][j] == True:
+		visited(i-1, j)
+
+
+fields=	[[True, False, True, False], 
+		[False, True, True, False], 
+		[False, False, False, True],]
