@@ -1,25 +1,21 @@
 # typing module needed for dictionaries (Lists)
 from typing import List
 
-def findJudge(N: int, trust: List[List[int]]) -> int:
-	judge = -1
-	if N == 1 and len(trust) == 0:
-		judge = N
-	if len(trust) > 0:
-		people = {}
-		for i in trust:
-			if people.get(i[1]):
-				people[i[1]] += 1
-			else:
-				people[i[1]] = 1
-		found = False
-		for key in people:
-			if people[key] == N-1:
-				judge = key
-		
-		for i in trust:
-			if i[0] == judge:
-				judge = -1
-	return judge
+# Definition for a binary tree node.
+class TreeNode:
+	def __init__(self, val=0, left=None, right=None):
+		self.val = val
+		self.left = left
+		self.right = right
 
-print(findJudge(N, trust))
+def maxDepth(root: TreeNode) -> int:
+
+
+tree = [3,9,20,null,null,15,7]
+
+def createTree(tree):
+	
+
+createTree(tree)
+maxDepth(root)
+	

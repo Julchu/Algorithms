@@ -302,7 +302,6 @@ def isAnagram(string1, string2):
 	return True
 
 def numFields(fields):
-	# stack = [] # append/pop
 	counter = 0
 	for i in range(len(fields)):
 		for j in range(len(fields[i])):
@@ -321,7 +320,7 @@ def visited(i, j):
 	if i > 0 and fields[i-1][j] == True:
 		visited(i-1, j)
 
-
 fields=	[[True, False, True, False], 
 		[False, True, True, False], 
-		[False, False, False, True],]
+		[False, False, False, True]]
+
