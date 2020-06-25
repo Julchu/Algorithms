@@ -141,6 +141,19 @@ graph[3] = [3]
 			return False
 		return True
 
+# 104. Maximum Depth of Binary Tree
+def maxDepth(self, root: TreeNode) -> int:
+	if root:
+		if root.left is not None and root.right is not None:
+			return max(self.maxDepth(root.left) + 1, self.maxDepth(root.right) + 1)
+		elif root.left is not None:
+			return self.maxDepth(root.left) + 1
+		elif root.right is not None:
+			return self.maxDepth(root.right) + 1
+		else:
+			return 1
+	return 0
+
 # 125. Valid Palindrome
 	newString = ""
 	l = []
@@ -200,6 +213,24 @@ graph[3] = [3]
 			elif (prices[i] - min > max):
 				max = prices[i] - min
 		return max
+
+# 206. Reverse Linked List
+	stack = []
+	while head:
+		stack.append(head)
+		head = head.next
+	returnHead = None
+	if stack:
+		newHead = stack.pop()
+		returnHead = newHead
+		while stack:
+			next = stack.pop()
+			newHead.next = next
+			newHead = newHead.next
+		newHead.next = None
+
+	return returnHead
+
 
 # 217 Contains Duplicates
 	def containsDuplicate(self, nums: List[int]) -> bool:
