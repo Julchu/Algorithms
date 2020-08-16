@@ -275,19 +275,19 @@ def maxDepth(self, root: TreeNode) -> int:
 			
 	def productExceptSelf2(nums: List[int]) -> List[int]:
 		n = len(nums)
-        
-        answer = [0] * n
-        answer[0] = 1
 		
-        for i in range(1, n):
-            answer[i] = nums[i - 1] * answer[i - 1]
+		answer = [0] * n
+		answer[0] = 1
+		
+		for i in range(1, n):
+			answer[i] = nums[i - 1] * answer[i - 1]
 
-        R = 1;
-        for i in reversed(range(n)):
-            answer[i] = answer[i] * R
-            R *= nums[i]
-        
-        return answer
+		R = 1;
+		for i in reversed(range(n)):
+			answer[i] = answer[i] * R
+			R *= nums[i]
+		
+		return answer
 
 # 53. Maximum Subarray
 
@@ -355,3 +355,40 @@ fields=	[[True, False, True, False],
 		[False, True, True, False], 
 		[False, False, False, True]]
 
+def reverseString(s: List[str]) -> None:
+	def aux(i):
+		if i == len(s)//2:
+			return
+		s[i], s[len(s) - 1 - i] = s[len(s) - 1 - i], s[i]
+		aux(i+1)
+	aux(0)
+	return s
+
+s = ["h","e","l","l","o"]
+print(reverseString(s))
+
+
+"""
+Recursion:
+	base case, then base case + 1
+
+"""
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+	def swapPairs(self, head: ListNode) -> ListNode:
+		if head is None or head.next is None:
+			return head
+		temp = head.next    
+		
+		head.next = self.swapPairs(temp.next)
+		
+		temp.next = head
+		
+		# self.swapPairs(temp.next)
+		
+		return temp
