@@ -1,31 +1,27 @@
 # typing module needed for dictionaries (Lists)
 from typing import List
 
-class ListNode:
-	def __init__(self, val=0, next=None):
-		self.val = val
-		self.next = next
+[1, n][2, n][3, n][4, n][5, None]
 
-def reverseList(head: ListNode) -> ListNode:
-	stack = []
-	while head:
-		stack.append(head)
-		head = head.next
-	
-	newHead = stack.pop()
-	returnHead = newHead
-	while stack:
-		next = stack.pop()
-		newHead.next = next
-		newHead = newHead.next
-	newHead.next = None
+prev = head [1, n]
+n = head.next [2, n]
+prev.next = None [1, None]
 
-	return returnHead
+Loop:
+    head = n [2, n]
+    n = n.next [3, n]
+    head.n = prev [2, n][1, None]
+    prev = head [2, n]
 
-n4 = ListNode(2, None)
-n3 = ListNode(8, n4)
-n2 = ListNode(5, n3)
-n1 = ListNode(3, n2)
-head = ListNode(1, n1)
+Loop:
+    head = n [3, n]
+    n = n.next [4, n]
+    head.next = prev [3, n][2, n][1, None]
+    prev = head [3, n]
 
-print(reverseList(head))
+Loop:
+    head = n [4, n]
+    n = n.next[5, n]
+    head.next = prev [4, n][3, n][2, n][1, None]
+    prev = head [4, n]
+
