@@ -1,5 +1,11 @@
-# 153: my attempt
+from typing import List
+
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
 class Solution:
+    # 153: my attempt
     def findMin(self, nums: List[int]) -> int:
         if len(nums) == 0:
             return
@@ -23,11 +29,7 @@ class Solution:
             else:
                 return right_min
 
-# Definition for singly-linked list.
-# class ListNode:
-#     def __init__(self, val=0, next=None):
-#         self.val = val
-#         self.next = next
+
     def reverseList(self, head: ListNode) -> ListNode:
         if head:
             prev = head
@@ -40,3 +42,16 @@ class Solution:
                 head.next = prev
                 prev = head
             return head
+
+# Amazon
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        numsSet = {}
+        for index in range(len(nums)):
+            numsSet[nums[index]] = index
+        for index in range(len(nums)):
+            difference = target - nums[index]
+            if difference in numsSet and index is not numsSet[difference]:
+                return [index, numsSet[difference]]
+
+s = Solution()
+print(s.twoSum([3,3], 6))

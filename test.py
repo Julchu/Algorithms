@@ -1,27 +1,41 @@
 # typing module needed for dictionaries (Lists)
 from typing import List
 
-[1, n][2, n][3, n][4, n][5, None]
+# class Node:
+#     def __init__(self, value, next=None):
+#         self.value = value
+#         self.next = next
 
-prev = head [1, n]
-n = head.next [2, n]
-prev.next = None [1, None]
+# node5 = Node(5, None)
+# node4 = Node(4, node5)
+# node3 = Node(3, node4)
+# node2 = Node(2, node3)
+# node1 = Node(1, node2)
 
-Loop:
-    head = n [2, n]
-    n = n.next [3, n]
-    head.n = prev [2, n][1, None]
-    prev = head [2, n]
+# def travel(node: Node) -> Node:
+#     prev = node
+#     node = node.next
+#     aux(node, prev)
+#     prev.next = None
 
-Loop:
-    head = n [3, n]
-    n = n.next [4, n]
-    head.next = prev [3, n][2, n][1, None]
-    prev = head [3, n]
+# def aux(node: Node, prev: Node) -> Node:
+#     if node is None:
+#         return
+#     else:
+#         node.next = prev
+#         aux(prev, prev.next)
+        
 
-Loop:
-    head = n [4, n]
-    n = n.next[5, n]
-    head.next = prev [4, n][3, n][2, n][1, None]
-    prev = head [4, n]
+# travel(node1)
 
+# a = {"a": 1, "c": 2}
+
+# letter = "b"
+# if letter in a:
+#     a[letter] += 1
+# else: 
+#     a[letter] = 1
+
+
+# a.pop("c")
+# print(a)
