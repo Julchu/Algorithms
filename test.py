@@ -6,11 +6,28 @@ from typing import List
 #         self.value = value
 #         self.next = next
 
-# node5 = Node(5, None)
+# def reverseList(self, head: ListNode) -> ListNode:
+#     if head:
+#         prev = head
+#         n = head.next
+#         prev.next = None
+
+#         while n is not None:
+#             head = n
+#             n = n.next
+#             head.next = prev
+#             prev = head
+#         return head
+
+# node5 = Node(5)
 # node4 = Node(4, node5)
 # node3 = Node(3, node4)
 # node2 = Node(2, node3)
 # node1 = Node(1, node2)
+# print(node5.next.val)
+# reverseList(node1)
+# print(node5.next.val)
+
 
 # def travel(node: Node) -> Node:
 #     prev = node

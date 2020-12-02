@@ -120,8 +120,11 @@ class Solution:
         fact = 1
         for i in range(1, num+1):
             fact *= i
-        return fact   
+        return fact
           
-# s = Solution()
+s = Solution()
 # str = "au"
 # print(s.lengthOfLongestSubstring(str))
+
+
+
