@@ -1,5 +1,6 @@
-# Project Euler
+# https://projecteuler.net/problem=3
 
+# Project Euler
 def Q1(n):
 	"""
 	Def: sum of multiples of 3 or 5 under 1000
