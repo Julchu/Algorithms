@@ -133,14 +133,25 @@ class Solution:
     #49. Group Anagrams
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
         groups = []
+        groupIndex = 0
         
         while strs:
             str1 = strs.pop()
-            # groups.append([str1])
+            groups.append([str1])
 
-            # Loop:
-                # if checkAnagram(str1, str):
-                    # groups[index].append(str2)
+            i = 0
+            n = len(strs)
+
+            while i < n:
+                str2 = strs[i]
+                if self.checkAnagram(str1, str2):
+                    groups[groupIndex].append(str2)
+                    strs.pop(i)
+                    i -= 1
+                    n -= 1
+                i += 1
+            groupIndex += 1
+        return groups
 
     def checkAnagram(self, str1: str, str2: str) -> bool:
         letters = {}
@@ -154,7 +165,7 @@ class Solution:
         while index < length:
             letter = str2[index]
             if letter in letters:
-                if letters[letter] == 0:
+                if letters[letter] == 1:
                     letters.pop(letter)
                 else:
                     letters[letter] -= 1
@@ -166,5 +177,7 @@ class Solution:
 
 solution = Solution()
 
-strs = ["eat","teaa","tan","ate","nat","bat"]
-print(solution.checkAnagram(strs[0], strs[1]))
+# strs = ["eat","tea","tan","ate","nat","bat"]
+strs = [["b",""]]
+# print(solution.checkAnagram(strs[0], strs[2]))
+print(solution.groupAnagrams(strs))
