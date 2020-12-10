@@ -88,7 +88,7 @@ class Solution:
     """
     Arrays and Strings
     """
-    # 1. Two Sum problem 
+    # 1. Two Sum problem (EASY)
     def twoSum(self, nums: List[int], target: int) -> List[int]:
         numsSet = {}
         for index in range(len(nums)):
@@ -98,7 +98,7 @@ class Solution:
             if difference in numsSet and index is not numsSet[difference]:
                 return [index, numsSet[difference]]
           
-    # 3. Longest Substring Without Repeating Characters
+    # 3. Longest Substring Without Repeating Characters (MED)
     def lengthOfLongestSubstring(self, s: str) -> int:
         maxLength = 0
         letters = {}
@@ -243,12 +243,139 @@ class Solution:
             words = cases[num]
         return words
     
+    # 387. First Unique Character in a String (EASY)
+    def firstUniqChar(self, s: str) -> int:
+        letters = {}
+        for char in s:
+            if char not in letters:
+                letters[char] = 1
+            else:
+                letters[char] += 1
+        for i in range(len(s)):
+            if letters[s[i]] == 1:
+                return i
+        return -1
+
+
+
     """
-    Linked Lists
+    # Linked Lists
     """
-    # 2. Add Two Numbers
+    # 2. Add Two Numbers (MED)
     def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
+        stack = []
+        carry = 0
+        
+        while l1 is not None or l2 is not None:
+            sum = carry
+            carry = 0
+            if l1:
+                sum += l1.val
+                l1 = l1.next
+            if l2: 
+                sum += l2.val
+                l2 = l2.next
+            if sum >= 10:
+                sum -= 10
+                carry = 1
+            stack.append(ListNode(sum, None))
+        if carry == 1:
+            stack.append(ListNode(carry, None))
+        for i in range(len(stack)-1):
+            stack[i].next = stack[i+1]
+        return stack[0]
+
+    # 21. Merge Two Sorted Lists (EASY)
+    # Recursive
+    def mergeTwoListsRecursive(self, l1: ListNode, l2: ListNode) -> ListNode:
+        if l1 and l2:
+            if l1.val < l2.val:
+                return ListNode(min(l1.val, l2.val), self.mergeTwoListsRecursive(l1.next, l2))
+            else: 
+                return ListNode(min(l1.val, l2.val), self.mergeTwoListsRecursive(l1, l2.next))
+        elif l1 and not l2:
+            return ListNode(l1.val, self.mergeTwoListsRecursive(l1.next, None))
+        elif not l1 and l2:
+            return ListNode(l2.val, self.mergeTwoListsRecursive(None, l2.next))
+        else: 
+            return None
+    # Iterative
+    def mergeTwoListsIterative(self, l1: ListNode, l2: ListNode) -> ListNode:
+        first = None
+        if l1 or l2:
+            if l1 and l2:
+                if l1.val < l2.val:
+                    first = l1
+                    l1 = l1.next
+                else:
+                    first = l2
+                    l2 = l2.next
+            elif l1:
+                first = l1
+                l1 = l1.next
+            elif l2:
+                first = l2
+                l2 = l2.next
+        last = first
 
 
+        while l1 or l2:
+            if l1 and l2:
+                if l1.val < l2.val:
+                    last.next = ListNode(l1.val, None)
+                    l1 = l1.next
+                else:
+                    last.next = ListNode(l2.val, None)
+                    l2 = l2.next
+            elif l1:
+                last.next = ListNode(l1.val, None)
+                l1 = l1.next
+            elif l2:
+                last.next = ListNode(l2.val, None)
+                l2 = l2.next
+            last = last.next
+        return first
+
+    # 25. Reverse Nodes in k-Group (HARD)
+    """
+    Could you solve the problem in O(1) extra memory space?
+    You may not alter the values in the list's nodes, only nodes itself may be changed.
+    """
+    def reverseKGroup(self, head: ListNode, k: int) -> ListNode:
+        return
+
+    # 138. Copy List with Random Pointer (MED)
+    def copyRandomList(self, head: 'Node') -> 'Node':
+        return
+
+    # 206. Reverse Linked List (EASY)
+    """
+    A linked list can be reversed either iteratively or recursively. Could you implement both?
+    """
+    def reverseList(self, head: ListNode) -> ListNode:
+        return
+
+    # 23. Merge k Sorted Lists (HARD)
+    def mergeKLists(self, lists: List[ListNode]) -> ListNode:
+        return
+
+
+# 1 -> 2 -> 4
+# 1 -> 3 -> 4
+# 1 -> 1 -> 2 -> 3 -> 4 -> 4
+
+lc = ListNode(4, None)
+lb = ListNode(2, lc)
+l1 = ListNode(1, lb)
+
+li = ListNode(4, None)
+lh = ListNode(3, li)
+l2 = ListNode(1, lh)
 
 solution = Solution()
+node = solution.mergeTwoListsIterative(None, None)
+
+while node:
+    print(node.val)
+    node = node.next
+
