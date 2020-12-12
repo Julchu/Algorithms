@@ -8,6 +8,12 @@ class ListNode:
         self.val = val
         self.next = next
 
+class Node:
+    def __init__(self, val=0, next=None, random=None):
+        self.val = val
+        self.next = next
+        self.random = random
+
 class Solution:
     """
     Online Assessment Q1
@@ -318,7 +324,6 @@ class Solution:
                 l2 = l2.next
         last = first
 
-
         while l1 or l2:
             if l1 and l2:
                 if l1.val < l2.val:
@@ -346,36 +351,63 @@ class Solution:
 
     # 138. Copy List with Random Pointer (MED)
     def copyRandomList(self, head: 'Node') -> 'Node':
-        return
+        node = None
+        firstHead = head
+        visited = {}
+        if head:
+            node = Node(head.val, None, None)
+            visited[head] = node
+            head = head.next
+        firstNode = node
+        while head:
+            visited[head] = Node(head.val, None, None)
+            node.next = visited[head]
+            node = node.next
+            head = head.next
+        
+        head = firstHead
+        node = firstNode
+
+        while head:
+            if head.random:
+                node.random = visited[head.random]
+            node = node.next
+            head = head.next
+            
+        return firstNode
 
     # 206. Reverse Linked List (EASY)
     """
     A linked list can be reversed either iteratively or recursively. Could you implement both?
     """
     def reverseList(self, head: ListNode) -> ListNode:
-        return
+        prev = head
+        head = head.next
+        prev.next = None
+        node = head.next
+
+        while node:
+            head.next = prev
+            prev = head
+            head = node
+            node = node.next
+        return head
 
     # 23. Merge k Sorted Lists (HARD)
     def mergeKLists(self, lists: List[ListNode]) -> ListNode:
         return
 
-
-# 1 -> 2 -> 4
-# 1 -> 3 -> 4
-# 1 -> 1 -> 2 -> 3 -> 4 -> 4
-
-lc = ListNode(4, None)
-lb = ListNode(2, lc)
-l1 = ListNode(1, lb)
-
-li = ListNode(4, None)
-lh = ListNode(3, li)
-l2 = ListNode(1, lh)
+# Reverse Linked List
+l4 = ListNode(5, None)
+l3 = ListNode(4, l4)
+l2 = ListNode(3, l3)
+l1 = ListNode(2, l2)
+l0 = ListNode(1, l1)
 
 solution = Solution()
-node = solution.mergeTwoListsIterative(None, None)
+node = solution.reverseList(l0)
 
-while node:
-    print(node.val)
-    node = node.next
-
+print(node.next.val)
+# while node:
+#     print(node.val)
+#     node = node.next
