@@ -262,8 +262,6 @@ class Solution:
                 return i
         return -1
 
-
-
     """
     # Linked Lists
     """
@@ -341,14 +339,6 @@ class Solution:
             last = last.next
         return first
 
-    # 25. Reverse Nodes in k-Group (HARD)
-    """
-    Could you solve the problem in O(1) extra memory space?
-    You may not alter the values in the list's nodes, only nodes itself may be changed.
-    """
-    def reverseKGroup(self, head: ListNode, k: int) -> ListNode:
-        return
-
     # 138. Copy List with Random Pointer (MED)
     def copyRandomList(self, head: 'Node') -> 'Node':
         node = None
@@ -380,34 +370,77 @@ class Solution:
     """
     A linked list can be reversed either iteratively or recursively. Could you implement both?
     """
-    def reverseList(self, head: ListNode) -> ListNode:
-        prev = head
-        head = head.next
-        prev.next = None
-        node = head.next
-
-        while node:
-            head.next = prev
+    # Iterative
+    def reverseListIterative(self, head: ListNode) -> ListNode:
+        if head:
             prev = head
-            head = node
-            node = node.next
+            next = head.next
+            head.next = None
+            while next:
+                head = next
+                next = head.next
+                head.next = prev
+                prev = head
         return head
+
+    # Recursive (official solution))
+    def reverseListRecursive(self, head: ListNode) -> ListNode:
+        if not head or not head.next:
+            return head
+        prev = self.reverseListRecursive(head.next)
+        head.next.next = head
+        head.next = None
+        return prev
 
     # 23. Merge k Sorted Lists (HARD)
     def mergeKLists(self, lists: List[ListNode]) -> ListNode:
+        queue = []
+        min = 0
+        if lists:
+            if lists[0]:
+                min = lists[0].val
+                minNode = lists[0]
+        else:
+            return lists
+        
+        count = 0
+        current = 0
+        while lists:
+            for list in lists:
+                if list:
+                    if list.val < min:
+                        minNode = list
+                        min = list.val
+                        list = list.next
+            queue.append(minNode)
+            list[current] = list[current].next
+            count = 0
+            current = count
+
+
         return
 
-# Reverse Linked List
-l4 = ListNode(5, None)
-l3 = ListNode(4, l4)
-l2 = ListNode(3, l3)
-l1 = ListNode(2, l2)
-l0 = ListNode(1, l1)
+    # 25. Reverse Nodes in k-Group (HARD)
+    """
+    Could you solve the problem in O(1) extra memory space?
+    You may not alter the values in the list's nodes, only nodes itself may be changed.
+    """
+    def reverseKGroup(self, head: ListNode, k: int) -> ListNode:
+        return
 
 solution = Solution()
-node = solution.reverseList(l0)
 
-print(node.next.val)
-# while node:
-#     print(node.val)
-#     node = node.next
+l8 = ListNode(6, None)
+l7 = ListNode(2, l8)
+
+l6 = ListNode(4, None)
+l5 = ListNode(3, l6)
+l4 = ListNode(1, l5)
+
+l3 = ListNode(5, None)
+l2 = ListNode(4, l3)
+l1 = ListNode(1, l2)
+
+lists = [l1, l2, l3]
+
+print(solution.mergeKLists(lists))

@@ -1,10 +1,10 @@
 # typing module needed for dictionaries (Lists)
 from typing import List
 
-# class Node:
-#     def __init__(self, value, next=None):
-#         self.value = value
-#         self.next = next
+class ListNode:
+    def __init__(self, val, next=None):
+        self.val = val
+        self.next = next
 
 # def reverseList(self, head: ListNode) -> ListNode:
 #     if head:
@@ -56,3 +56,35 @@ from typing import List
 
 # a.pop("c")
 # print(a)
+
+'''
+[]
+
+[[]]
+
+[[], [], []]
+
+[[1], [], []]
+
+[[1, 2], [2], []]
+'''
+
+# l6 = ListNode(6, None)
+l6 = None
+
+l5 = ListNode(5, None)
+l4 = ListNode(4, l5)
+
+l3 = ListNode(3, None)
+l2 = ListNode(2, l3)
+l1 = ListNode(1, l2)
+
+lists = [l1, l3, l6]
+
+# for list in lists:
+# 	if list:
+# 		if list.val:
+# 			print(list.val)
+
+for list in lists:
+	print(list)
