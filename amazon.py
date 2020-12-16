@@ -8,6 +8,9 @@ class ListNode:
         self.val = val
         self.next = next
 
+    def __str__(self):
+        return str(self.val)
+
 class Node:
     def __init__(self, val=0, next=None, random=None):
         self.val = val
@@ -392,34 +395,6 @@ class Solution:
         head.next = None
         return prev
 
-    # 23. Merge k Sorted Lists (HARD)
-    def mergeKLists(self, lists: List[ListNode]) -> ListNode:
-        queue = []
-        min = 0
-        if lists:
-            if lists[0]:
-                min = lists[0].val
-                minNode = lists[0]
-        else:
-            return lists
-        
-        count = 0
-        current = 0
-        while lists:
-            for list in lists:
-                if list:
-                    if list.val < min:
-                        minNode = list
-                        min = list.val
-                        list = list.next
-            queue.append(minNode)
-            list[current] = list[current].next
-            count = 0
-            current = count
-
-
-        return
-
     # 25. Reverse Nodes in k-Group (HARD)
     """
     Could you solve the problem in O(1) extra memory space?
@@ -428,19 +403,106 @@ class Solution:
     def reverseKGroup(self, head: ListNode, k: int) -> ListNode:
         return
 
+    # 23. Merge k Sorted Lists (HARD)
+    def mergeKLists(self, lists: List[ListNode]) -> ListNode:
+        visited = {}
+        firstNode = None
+        currentNode = None
+        min = 0
+        minNode = None
+
+        while lists:
+            count = 0
+            
+            while not lists[count]:
+                count += 1
+
+            if lists[count]:
+                min = lists[count].val
+                minNode = lists[count]
+
+            count = 0
+            current = count
+
+            for list in lists:
+                if list:
+                    if list.val < min:
+                        min = list.val
+                        minNode = list
+                        current = count
+                count += 1
+            
+            if minNode not in visited:
+                visited[minNode] = 1
+                if not firstNode:
+                    firstNode = minNode
+                    currentNode = firstNode
+                else: 
+                    currentNode.next = minNode
+                    currentNode = currentNode.next
+
+            if lists[current]:
+                lists[current] = lists[current].next
+
+            count = 0
+
+            for list in lists:
+                if not list:
+                    lists.pop(count)
+                    count -= 1
+                count += 1
+        if currentNode:
+            currentNode.next = None
+        return firstNode
+
+'''
+        get first node and assign it to min, minNode
+
+while there exists a list in lists
+    compare head of each list:
+        return min of current min and min of heads
+'''
+
 solution = Solution()
 
-l8 = ListNode(6, None)
-l7 = ListNode(2, l8)
+l9 = None
 
-l6 = ListNode(4, None)
-l5 = ListNode(3, l6)
-l4 = ListNode(1, l5)
+# l8 = ListNode(6, None)
+# l7 = ListNode(2, l8)
 
-l3 = ListNode(5, None)
-l2 = ListNode(4, l3)
-l1 = ListNode(1, l2)
+# l6 = ListNode(4, None)
+# l5 = ListNode(3, l6)
+# l4 = ListNode(1, l5)
 
-lists = [l1, l2, l3]
+# l3 = ListNode(5, None)
+# l2 = ListNode(4, l3)
+# l1 = ListNode(1, l2)
 
-print(solution.mergeKLists(lists))
+l7 = ListNode(10, None)
+l6 = ListNode(6, l7)
+
+l5 = None
+
+l4 = ListNode(11, None)
+l3 = ListNode(5, l4)
+l2 = ListNode(-1, l3)
+
+l1 = None
+
+lists = [l1, l2, l5, l6]
+
+# [[2],[],[-1]]
+# [[], [-1,5,11], [], [6,10]]
+
+# lists = [l2, l1, l3]
+# lists = [l9, l9, l9]
+# lists = [[], []]
+# lists = [l7]
+
+# print(solution.mergeKLists(lists))
+
+firstNode = solution.mergeKLists(lists)
+
+while firstNode:
+    print(firstNode)
+    firstNode = firstNode.next
