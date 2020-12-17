@@ -405,55 +405,29 @@ class Solution:
 
     # 23. Merge k Sorted Lists (HARD)
     def mergeKLists(self, lists: List[ListNode]) -> ListNode:
-        visited = {}
-        firstNode = None
-        currentNode = None
-        min = 0
-        minNode = None
-
-        while lists:
-            count = 0
-            
-            while not lists[count]:
-                count += 1
-
-            if lists[count]:
-                min = lists[count].val
-                minNode = lists[count]
-
-            count = 0
-            current = count
-
+        count = 0
+        current = count
+        done = False
+        while not done:
+            empty = True
             for list in lists:
                 if list:
-                    if list.val < min:
-                        min = list.val
-                        minNode = list
-                        current = count
+                    current = count
+                    empty = False
                 count += 1
-            
-            if minNode not in visited:
-                visited[minNode] = 1
-                if not firstNode:
-                    firstNode = minNode
-                    currentNode = firstNode
-                else: 
-                    currentNode.next = minNode
-                    currentNode = currentNode.next
-
             if lists[current]:
+                print(lists[current])
                 lists[current] = lists[current].next
+            else:
+                print(lists)
+            done = empty
 
-            count = 0
 
-            for list in lists:
-                if not list:
-                    lists.pop(count)
-                    count -= 1
-                count += 1
-        if currentNode:
-            currentNode.next = None
-        return firstNode
+
+
+
+
+
 
 '''
         get first node and assign it to min, minNode
