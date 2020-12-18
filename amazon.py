@@ -16,6 +16,11 @@ class Node:
         self.val = val
         self.next = next
         self.random = random
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
 
 class Solution:
     """
@@ -95,7 +100,7 @@ class Solution:
             
         return shortestDistance
     """
-    Arrays and Strings
+Arrays and Strings
     """
     # 1. Two Sum problem (EASY)
     def twoSum(self, nums: List[int], target: int) -> List[int]:
@@ -266,7 +271,7 @@ class Solution:
         return -1
 
     """
-    # Linked Lists
+# Linked Lists
     """
     # 2. Add Two Numbers (MED)
     def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
@@ -395,88 +400,94 @@ class Solution:
         head.next = None
         return prev
 
-    # 25. Reverse Nodes in k-Group (HARD)
-    """
-    Could you solve the problem in O(1) extra memory space?
-    You may not alter the values in the list's nodes, only nodes itself may be changed.
-    """
-    def reverseKGroup(self, head: ListNode, k: int) -> ListNode:
-        return
-
     # 23. Merge k Sorted Lists (HARD)
     def mergeKLists(self, lists: List[ListNode]) -> ListNode:
-        count = 0
-        current = count
+        min = None
+        firstNode = None
+        currentNode = None
         done = False
-        while not done:
-            empty = True
-            for list in lists:
-                if list:
+        n = len(lists)
+        if n > 0:
+            while not done:
+                empty = True
+                
+                count = 0
+                current = count
+                
+                while count < n-1 and not lists[count]:
+                    count += 1
+                if lists[count]:
+                    min = lists[count].val
                     current = count
-                    empty = False
-                count += 1
-            if lists[current]:
-                print(lists[current])
-                lists[current] = lists[current].next
-            else:
-                print(lists)
-            done = empty
+                
+                count = 0
+
+                for list in lists:
+                    if list:
+                        if list.val < min:
+                            min = list.val
+                            current = count
+                        empty = False
+                    count += 1
+                if lists[current]:
+                    if not firstNode:
+                        firstNode = lists[current]
+                        currentNode = firstNode
+                    else: 
+                        currentNode.next = lists[current]
+                        currentNode = currentNode.next
+
+                    lists[current] = lists[current].next
+                    
+                done = empty
+
+        return firstNode
+
+    """
+Trees and Graphs
+    """
+
+    # 98. Validate Binary Search Tree (MED)
+
+    # 101. Symmetric Tree (EASY)
+        # Recursively and iteratively
+
+    def isSymmetric(self, root: TreeNode) -> bool:
 
 
 
 
 
+    # 102. Binary Tree Level Order Traversal (MED)
 
+    # 103. Binary Tree Zigzag Level Order Traversal (MED)
 
+    # 124. Binary Tree Maximum Path Sum (HARD)
 
-'''
-        get first node and assign it to min, minNode
+    # 127. Word Ladder (MED)
 
-while there exists a list in lists
-    compare head of each list:
-        return min of current min and min of heads
-'''
+    # Word Ladder 2
+
+    # 200. Number of Islands (MED)
+
+    # 207. Course Schedule (MED)
+
+    # 236. Lowest Common Ancestor of a Binary Tree (MED)
+
+    # 543. Diameter of Binary Tree (EASY)
+
+    # 675. Cut Off Trees for Golf Event (HARD)
+
+    # 733. Flood Fill (EASY)
 
 solution = Solution()
 
-l9 = None
+rr = TreeNode(3, None, None)
+rl = TreeNode(3, None, None)
+lr = TreeNode(3, None, None)
+ll = TreeNode(3, None, None)
+r = TreeNode(2, None, None)
+l = TreeNode(2, None, None)
+root = TreeNode(1, l, r)
 
-# l8 = ListNode(6, None)
-# l7 = ListNode(2, l8)
-
-# l6 = ListNode(4, None)
-# l5 = ListNode(3, l6)
-# l4 = ListNode(1, l5)
-
-# l3 = ListNode(5, None)
-# l2 = ListNode(4, l3)
-# l1 = ListNode(1, l2)
-
-l7 = ListNode(10, None)
-l6 = ListNode(6, l7)
-
-l5 = None
-
-l4 = ListNode(11, None)
-l3 = ListNode(5, l4)
-l2 = ListNode(-1, l3)
-
-l1 = None
-
-lists = [l1, l2, l5, l6]
-
-# [[2],[],[-1]]
-# [[], [-1,5,11], [], [6,10]]
-
-# lists = [l2, l1, l3]
-# lists = [l9, l9, l9]
-# lists = [[], []]
-# lists = [l7]
-
-# print(solution.mergeKLists(lists))
-
-firstNode = solution.mergeKLists(lists)
-
-while firstNode:
-    print(firstNode)
-    firstNode = firstNode.next
+print(solution.isSymmetric(root))
