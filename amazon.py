@@ -16,11 +16,16 @@ class Node:
         self.val = val
         self.next = next
         self.random = random
+    def __str__(self):
+        return str(self.val)
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
         self.val = val
         self.left = left
         self.right = right
+    def __str__(self):
+        return str(self.val)
+
 
 class Solution:
     """
@@ -446,17 +451,132 @@ Arrays and Strings
     """
 Trees and Graphs
     """
+    def BFS(self, root: TreeNode):
+        queue = []
+        queue.append(root)
+        while queue:
+            node = queue.pop(0)
+            print(node.val)
+            if node.left:
+                queue.append(node.left)
+            if node.right:
+                queue.append(node.right)
+        return
 
-    # 98. Validate Binary Search Tree (MED)
+    # Iterative
+    def DFSIterative(self, root: TreeNode):
+        stack = []
+        stack.append(root)
+        while stack:
+            node = stack.pop()
+            print(node.val)
+            if node.right:
+                stack.append(node.right)
+            if node.left:
+                stack.append(node.left)
+        return
+
+    def DFSRecursive(self, root: TreeNode):
+        if root:
+            print(root.val)
+            if root.left: 
+                self.DFSRecursive(root.left)
+            if root.right:
+                self.DFSRecursive(root.right)
+
+    '''
+    def DFSAux(self, root: TreeNode, visited: dict):
+        print(root.val)
+        visited[root] = True
+        if root.left: 
+            self.DFSAux(root.left, visited)
+        if root.right:
+            self.DFSAux(root.right, visited)
+    '''
 
     # 101. Symmetric Tree (EASY)
         # Recursively and iteratively
 
     def isSymmetric(self, root: TreeNode) -> bool:
+        rows = {}
+        height = 0
+        q = []
+        if root:
+            q.append(root)
+            rows[height] = [root]
+            height += 1
+        while q:
+            for _ in range(len(q)):
+                n = q.pop(0)
+                if n.left:
+                    q.append(n.left)
+                if n.right:
+                    q.append(n.right)
+                if height not in rows:
+                    rows[height] = [n.left]
+                else:
+                    rows[height].append(n.left)
+                rows[height].append(n.right)
+            height += 1
 
+        i = 0
+        while i < len(rows):
+            n = len(rows[i])
+            for j in range(n//2):
+                if rows[i][j] and rows[i][n-1-j]:
+                    if rows[i][j].val != rows[i][n-1-j].val:
+                        return False
+                elif (not rows[i][j] and rows[i][n-1-j]) or (rows[i][j] and not rows[i][n-1-j]):
+                    return False
+            i += 1
+        return True
 
+    # 733. Flood Fill (EASY)
+    def floodFill(self, image: List[List[int]], sr: int, sc: int, newColor: int) -> List[List[int]]:
+        visited = []
+        for i in range(len(image)):
+            visited.append([False] * len(image[i]))
 
+        color = image[sr][sc]
+        queue = []
+        queue.append([sr, sc])
+        image[sr][sc] = newColor
 
+        while queue:
+            coords = queue.pop(0) # [1, 1]
+            row = coords[0]
+            col = coords[1]
+            visited[row][col] = True
+            
+            # left
+            if 0 < col:
+                if image[row][col-1] == color and visited[row][col-1] == False:
+                    image[row][col-1] = newColor
+                    queue.append([row, col-1])
+
+            # right
+            if col < len(image[0])-1 and visited[row][col+1] == False:
+                if image[row][col+1] == color:
+                    image[row][col+1] = newColor
+                    queue.append([row, col+1])
+
+            # top
+            if 0 < row:
+                if image[row-1][col] == color and visited[row-1][col] == False:
+                    image[row-1][col] = newColor
+                    queue.append([row-1, col])
+
+            # bot
+            if row < len(image)-1:
+                if image[row+1][col] == color and visited[row+1][col] == False:
+                    image[row+1][col] = newColor
+                    queue.append([row+1, col])
+        return image
+
+    # 98. Validate Binary Search Tree (MED)
+    def isValidBST(self, root: TreeNode) -> bool:
+        
+        return
 
     # 102. Binary Tree Level Order Traversal (MED)
 
@@ -478,16 +598,13 @@ Trees and Graphs
 
     # 675. Cut Off Trees for Golf Event (HARD)
 
-    # 733. Flood Fill (EASY)
-
 solution = Solution()
 
-rr = TreeNode(3, None, None)
-rl = TreeNode(3, None, None)
-lr = TreeNode(3, None, None)
-ll = TreeNode(3, None, None)
-r = TreeNode(2, None, None)
-l = TreeNode(2, None, None)
-root = TreeNode(1, l, r)
+# image = [[1,1,1],[1,1,0],[1,0,1]]
+image = [[0,0,0], [0,1,1]]
+sr = 1
+sc = 1
+newColor = 1
 
-print(solution.isSymmetric(root))
+image = solution.floodFill(image, sr, sc, newColor)
+print(image)

@@ -6,85 +6,57 @@ class ListNode:
         self.val = val
         self.next = next
 
-# def reverseList(self, head: ListNode) -> ListNode:
-#     if head:
-#         prev = head
-#         n = head.next
-#         prev.next = None
-
-#         while n is not None:
-#             head = n
-#             n = n.next
-#             head.next = prev
-#             prev = head
-#         return head
-
-# node5 = Node(5)
-# node4 = Node(4, node5)
-# node3 = Node(3, node4)
-# node2 = Node(2, node3)
-# node1 = Node(1, node2)
-# print(node5.next.val)
-# reverseList(node1)
-# print(node5.next.val)
-
-
-# def travel(node: Node) -> Node:
-#     prev = node
-#     node = node.next
-#     aux(node, prev)
-#     prev.next = None
-
-# def aux(node: Node, prev: Node) -> Node:
-#     if node is None:
-#         return
-#     else:
-#         node.next = prev
-#         aux(prev, prev.next)
-        
-
-# travel(node1)
-
-# a = {"a": 1, "c": 2}
-
-# letter = "b"
-# if letter in a:
-#     a[letter] += 1
-# else: 
-#     a[letter] = 1
-
-
-# a.pop("c")
-# print(a)
+image = [[1,1,1],[1,1,0],[1,0,1]]
+sr = 1
+sc = 1
+newColor = 2
 
 '''
-[]
-
-[[]]
-
-[[], [], []]
-
-[[1], [], []]
-
-[[1, 2], [2], []]
+sr: 1, sc: 1
+1 1 1
+1 1 0
+1 0 1
 '''
 
-# l6 = ListNode(6, None)
-l6 = None
+color = image[sr][sc]
+queue = []
+queue.append([sr, sc])
 
-l5 = ListNode(5, None)
-l4 = ListNode(4, l5)
+while queue:
+    coords = queue.pop(0) # [1, 1]
+    row = coords[0]
+    col = coords[1]
+    
+    # left
+    if 0 < col:
+        if image[row][col-1] == color:
+            image[row][col-1] = newColor
+            queue.append([row, col-1])
+            print([row, col-1])
 
-l3 = ListNode(3, None)
-l2 = ListNode(2, l3)
-l1 = ListNode(1, l2)
+    # right
+    if col < len(image[0])-1:
+        if image[row][col+1] == color:
+            image[row][col+1] = newColor
+            queue.append([row, col+1])
+            print([row, col+1])
 
-lists = [l1, l3, l6]
+    # top
+    if 0 < row:
+        if image[row-1][col] == color:
+            image[row-1][col] = newColor
+            queue.append([row-1, col])
+            print([row-1, col])
 
-# for list in lists:
-# 	if list:
-# 		if list.val:
-# 			print(list.val)
+    # bot
+    if row < len(image)-1:
+        if image[row+1][col] == color:
+            image[row+1][col] = newColor
+            queue.append([row+1, col])
+            print([row+1, col])
 
-for list in lists:
-	print(list)
+array1 = [[1,1,1],[1,1,0],[1,0,1]]
+
+array2 = array1
+for i in range(len(array1)):
+    array2[i] = [False] * len(array1[i])
