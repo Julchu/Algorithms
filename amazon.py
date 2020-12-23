@@ -16,6 +16,7 @@ class Node:
         self.val = val
         self.next = next
         self.random = random
+
     def __str__(self):
         return str(self.val)
 class TreeNode:
@@ -23,6 +24,7 @@ class TreeNode:
         self.val = val
         self.left = left
         self.right = right
+
     def __str__(self):
         return str(self.val)
 
@@ -316,6 +318,7 @@ Arrays and Strings
             return ListNode(l2.val, self.mergeTwoListsRecursive(None, l2.next))
         else: 
             return None
+
     # Iterative
     def mergeTwoListsIterative(self, l1: ListNode, l2: ListNode) -> ListNode:
         first = None
@@ -494,6 +497,43 @@ Trees and Graphs
             self.DFSAux(root.right, visited)
     '''
 
+    '''
+        #         3
+        #    9         20
+        # N    N    15    7
+
+        In order: 9, 3, 15, 20, 7
+        Pre order: 3, 9, 20, 15, 7
+        Post order: 9, 15, 7, 20, 3
+
+        #         4
+        #    2         6
+        # 1    3    5    7
+
+        In order: 1, 2, 3, 4, 5, 6, 7
+        Pre order: 4, 2, 1, 3, 6, 5, 7
+        Post order: 1, 3, 2, 5, 7, 6, 4
+    '''
+
+    def inOrderTraversal(self, root: TreeNode): 
+        if root:
+            self.inOrderTraversal(root.left)
+            print(root)
+            self.inOrderTraversal(root.right)
+
+    def preOrderTraversal(self, root: TreeNode):
+        if root:
+            print(root)
+            self.preOrderTraversal(root.left)
+            self.preOrderTraversal(root.right)
+    
+    def postOrderTraversal(self, root: TreeNode): 
+        if root:
+            self.postOrderTraversal(root.left)
+            self.postOrderTraversal(root.right)
+            print(root)
+
+
     # 101. Symmetric Tree (EASY)
         # Recursively and iteratively
 
@@ -575,12 +615,64 @@ Trees and Graphs
 
     # 98. Validate Binary Search Tree (MED)
     def isValidBST(self, root: TreeNode) -> bool:
-        
-        return
+        numbers = []
+        if root:
+            self.isValidBSTAux(root, numbers)
+        if len(numbers) > 0:
+            min = numbers[0]
+            for i in range(1, len(numbers), 1):
+                if numbers[i] <= min:
+                    return False
+                min = numbers[i]
+        return True
+
+    def isValidBSTAux(self, root: TreeNode, numbers) -> bool:
+        if root:
+            self.isValidBSTAux(root.left, numbers)
+            numbers.append(root.val)
+            self.isValidBSTAux(root.right, numbers)
 
     # 102. Binary Tree Level Order Traversal (MED)
+    def levelOrder(self, root: TreeNode) -> List[List[int]]:
+        rows = []
+        queue = []
+        if root:
+            queue.append(root)
+        while queue:
+            newRow = []
+            for _ in range(len(queue)):
+                node = queue.pop(0)
+                newRow.append(node.val)
+                if node.left:
+                    queue.append(node.left)
+                if node.right:
+                    queue.append(node.right)
+            rows.append(newRow)
+        return rows
 
     # 103. Binary Tree Zigzag Level Order Traversal (MED)
+    def zigzagLevelOrder(self, root: TreeNode) -> List[List[int]]:
+        reversed = False
+        rows = []
+        queue = []
+        if root:
+            queue.append(root)
+        while queue:
+            newRow = []
+            for _ in range(len(queue)):
+                node = queue.pop(0)
+                newRow.append(node.val)
+                if node.left:
+                    queue.append(node.left)
+                if node.right:
+                    queue.append(node.right)
+            if reversed:
+                newRow = newRow[::-1]
+                reversed = False
+            else:
+                reversed = True
+            rows.append(newRow)
+        return rows
 
     # 124. Binary Tree Maximum Path Sum (HARD)
 
@@ -589,22 +681,90 @@ Trees and Graphs
     # Word Ladder 2
 
     # 200. Number of Islands (MED)
+    def numIslands(self, grid: List[List[str]]) -> int:
+        islands = 0
+        visited = []
+
+        for i in range(len(grid)):
+            visited.append([False] * len(grid[i]))
+
+        for i in range(len(grid)):
+            for j in range(len(grid[i])):
+                if grid[i][j] == "1" and visited[i][j] == False:
+                    islands += 1
+                    visited[i][j] = True
+                    self.BFSIslands(i, j, grid, visited)
+        return islands
+
+    def BFSIslands(self, i: int, j: int, grid: list, visited: list) -> None:
+        queue = []
+        queue.append([i, j])
+        while queue:
+            for _ in range(len(queue)):
+                coords = queue.pop(0)
+                row = coords[0]
+                col = coords[1]
+                # left
+                if col > 0:
+                    if grid[row][col-1] == "1" and visited[row][col-1] == False:
+                        visited[row][col-1] = True
+                        queue.append([row, col-1])
+                # right
+                if col < len(grid[0]) - 1:
+                    if grid[row][col+1] == "1" and visited[row][col+1] == False:
+                        visited[row][col+1] = True
+                        queue.append([row, col+1])
+                # top
+                if row > 0:
+                    if grid[row-1][col] == "1" and visited[row-1][col] == False:
+                        visited[row-1][col] = True
+                        queue.append([row-1, col])
+                # bot
+                if row < len(grid) - 1:
+                    if grid[row+1][col] == "1" and visited[row+1][col] == False:
+                        visited[row+1][col] = True
+                        queue.append([row+1, col])
+        return
 
     # 207. Course Schedule (MED)
 
     # 236. Lowest Common Ancestor of a Binary Tree (MED)
 
     # 543. Diameter of Binary Tree (EASY)
+    def diameterOfBinaryTree(self, root: TreeNode) -> int:
+
+
+        return
 
     # 675. Cut Off Trees for Golf Event (HARD)
 
 solution = Solution()
 
-# image = [[1,1,1],[1,1,0],[1,0,1]]
-image = [[0,0,0], [0,1,1]]
-sr = 1
-sc = 1
-newColor = 1
+# rr = TreeNode(7, None, None)
+# rl = TreeNode(5, None, None)
+# lr = TreeNode(3, None, None)
+# ll = TreeNode(1, None, None)
+# r = TreeNode(5, rl, rr)
+# l = TreeNode(2, ll, lr)
+# root = TreeNode(4, l, r)
 
-image = solution.floodFill(image, sr, sc, newColor)
-print(image)
+'''
+#         4
+#    2         5
+# 1    3    5    7
+'''
+grid = [
+  ["1","1","1","1","0"],
+  ["1","1","0","1","0"],
+  ["1","1","0","0","0"],
+  ["0","0","0","0","0"]
+]
+
+grid = [
+  ["1","1","0","0","0"],
+  ["1","1","0","0","0"],
+  ["0","0","1","0","0"],
+  ["0","0","0","1","1"]
+]
+
+print(solution.numIslands(grid))
