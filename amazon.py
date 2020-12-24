@@ -515,17 +515,17 @@ Trees and Graphs
         Post order: 1, 3, 2, 5, 7, 6, 4
     '''
 
-    def inOrderTraversal(self, root: TreeNode): 
-        if root:
-            self.inOrderTraversal(root.left)
-            print(root)
-            self.inOrderTraversal(root.right)
-
     def preOrderTraversal(self, root: TreeNode):
         if root:
             print(root)
             self.preOrderTraversal(root.left)
             self.preOrderTraversal(root.right)
+
+    def inOrderTraversal(self, root: TreeNode): 
+        if root:
+            self.inOrderTraversal(root.left)
+            print(root)
+            self.inOrderTraversal(root.right)
     
     def postOrderTraversal(self, root: TreeNode): 
         if root:
@@ -740,31 +740,52 @@ Trees and Graphs
 
 solution = Solution()
 
-# rr = TreeNode(7, None, None)
-# rl = TreeNode(5, None, None)
-# lr = TreeNode(3, None, None)
-# ll = TreeNode(1, None, None)
-# r = TreeNode(5, rl, rr)
-# l = TreeNode(2, ll, lr)
-# root = TreeNode(4, l, r)
-
 '''
-#         4
-#    2         5
-# 1    3    5    7
+#          1
+#      2          3
+#   4    5     6     7
+# 8  9 10 11 12 13 14 15
 '''
-grid = [
-  ["1","1","1","1","0"],
-  ["1","1","0","1","0"],
-  ["1","1","0","0","0"],
-  ["0","0","0","0","0"]
-]
+rrr = TreeNode(15, None, None)
+rrl = TreeNode(14, None, None)
+rlr = TreeNode(13, None, None)
+rll = TreeNode(12, None, None)
+lrr = TreeNode(11, None, None)
+lrl = TreeNode(10, None, None)
+llr = TreeNode(9, None, None)
+lll = TreeNode(8, None, None)
+rr = TreeNode(7, rrl, rrr)
+rl = TreeNode(6, rll, rlr)
+lr = TreeNode(5, lrl, lrr)
+ll = TreeNode(4, lll, llr)
+r = TreeNode(3, rl, rr)
+l = TreeNode(2, ll, lr)
+root = TreeNode(1, l, r)
 
-grid = [
-  ["1","1","0","0","0"],
-  ["1","1","0","0","0"],
-  ["0","0","1","0","0"],
-  ["0","0","0","1","1"]
-]
+print("BFS: ")
+print(solution.BFS(root))
+print("\nDFS: ")
+print(solution.DFSRecursive(root))
+print("\nIn Order: ")
+print(solution.inOrderTraversal(root))
+print("\nPre Order: ")
+print(solution.preOrderTraversal(root))
+print("\nPost Order: ")
+print(solution.postOrderTraversal(root))
 
-print(solution.numIslands(grid))
+
+# grid = [
+#   ["1","1","1","1","0"],
+#   ["1","1","0","1","0"],
+#   ["1","1","0","0","0"],
+#   ["0","0","0","0","0"]
+# ]
+
+# grid = [
+#   ["1","1","0","0","0"],
+#   ["1","1","0","0","0"],
+#   ["0","0","1","0","0"],
+#   ["0","0","0","1","1"]
+# ]
+
+# print(solution.numIslands(grid))
