@@ -28,6 +28,15 @@ class TreeNode:
     def __str__(self):
         return str(self.val)
 
+class Course:
+    def __init__(self, prereqs: list):
+        self.prereqs = prereqs
+    
+    def __str__(self):
+        return str(self.prereqs)
+    
+    # def __eq__(self, other):
+    #     return other.prereqs == self.prereqs
 
 class Solution:
     """
@@ -536,7 +545,6 @@ Trees and Graphs
 
     # 101. Symmetric Tree (EASY)
         # Recursively and iteratively
-
     def isSymmetric(self, root: TreeNode) -> bool:
         rows = {}
         height = 0
@@ -676,10 +684,6 @@ Trees and Graphs
 
     # 124. Binary Tree Maximum Path Sum (HARD)
 
-    # 127. Word Ladder (MED)
-
-    # Word Ladder 2
-
     # 200. Number of Islands (MED)
     def numIslands(self, grid: List[List[str]]) -> int:
         islands = 0
@@ -727,18 +731,35 @@ Trees and Graphs
         return
 
     # 207. Course Schedule (MED)
+    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+        
+        return True
 
     # 236. Lowest Common Ancestor of a Binary Tree (MED)
 
     # 543. Diameter of Binary Tree (EASY)
     def diameterOfBinaryTree(self, root: TreeNode) -> int:
+        return
 
-
+    def diameterOfBinaryTreeAux(self, root: TreeNode) -> int:
         return
 
     # 675. Cut Off Trees for Golf Event (HARD)
 
+    # 127. Word Ladder (MED)
+    def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
+        return
+
+    # Word Ladder 2
+
 solution = Solution()
+
+
+numCourse = 7
+prerequisites = [[1,0],[0,3],[0,2],[3,2],[2,5],[4,5],[5,6],[2,4]]
+
+print(solution.canFinish(numCourse, prerequisites))
+
 
 '''
 #          1
@@ -746,32 +767,32 @@ solution = Solution()
 #   4    5     6     7
 # 8  9 10 11 12 13 14 15
 '''
-rrr = TreeNode(15, None, None)
-rrl = TreeNode(14, None, None)
-rlr = TreeNode(13, None, None)
-rll = TreeNode(12, None, None)
-lrr = TreeNode(11, None, None)
-lrl = TreeNode(10, None, None)
-llr = TreeNode(9, None, None)
-lll = TreeNode(8, None, None)
-rr = TreeNode(7, rrl, rrr)
-rl = TreeNode(6, rll, rlr)
-lr = TreeNode(5, lrl, lrr)
-ll = TreeNode(4, lll, llr)
-r = TreeNode(3, rl, rr)
-l = TreeNode(2, ll, lr)
-root = TreeNode(1, l, r)
+# rrr = TreeNode(15, None, None)
+# rrl = TreeNode(14, None, None)
+# rlr = TreeNode(13, None, None)
+# rll = TreeNode(12, None, None)
+# lrr = TreeNode(11, None, None)
+# lrl = TreeNode(10, None, None)
+# llr = TreeNode(9, None, None)
+# lll = TreeNode(8, None, None)
+# rr = TreeNode(7, rrl, rrr)
+# rl = TreeNode(6, rll, rlr)
+# lr = TreeNode(5, lrl, lrr)
+# ll = TreeNode(4, lll, llr)
+# r = TreeNode(3, rl, rr)
+# l = TreeNode(2, ll, lr)
+# root = TreeNode(1, l, r)
 
-print("BFS: ")
-print(solution.BFS(root))
-print("\nDFS: ")
-print(solution.DFSRecursive(root))
-print("\nIn Order: ")
-print(solution.inOrderTraversal(root))
-print("\nPre Order: ")
-print(solution.preOrderTraversal(root))
-print("\nPost Order: ")
-print(solution.postOrderTraversal(root))
+# print("BFS: ")
+# print(solution.BFS(root))
+# print("\nDFS: ")
+# print(solution.DFSRecursive(root))
+# print("\nIn Order: ")
+# print(solution.inOrderTraversal(root))
+# print("\nPre Order: ")
+# print(solution.preOrderTraversal(root))
+# print("\nPost Order: ")
+# print(solution.postOrderTraversal(root))
 
 
 # grid = [
@@ -788,4 +809,4 @@ print(solution.postOrderTraversal(root))
 #   ["0","0","0","1","1"]
 # ]
 
-# print(solution.numIslands(grid))
+
