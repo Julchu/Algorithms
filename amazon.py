@@ -11,7 +11,7 @@ class ListNode:
     def __str__(self):
         return str(self.val)
 
-class Node:
+class RandomNode:
     def __init__(self, val=0, next=None, random=None):
         self.val = val
         self.next = next
@@ -365,17 +365,17 @@ Arrays and Strings
         return first
 
     # 138. Copy List with Random Pointer (MED)
-    def copyRandomList(self, head: 'Node') -> 'Node':
+    def copyRandomList(self, head: 'RandomNode') -> 'RandomNode':
         node = None
         firstHead = head
         visited = {}
         if head:
-            node = Node(head.val, None, None)
+            node = RandomNode(head.val, None, None)
             visited[head] = node
             head = head.next
         firstNode = node
         while head:
-            visited[head] = Node(head.val, None, None)
+            visited[head] = RandomNode(head.val, None, None)
             node.next = visited[head]
             node = node.next
             head = head.next
@@ -732,8 +732,35 @@ Trees and Graphs
 
     # 207. Course Schedule (MED)
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        
+        sorted = []
+        queue = []
+
+        while queue:
+            queue.pop()
+
+
         return True
+
+    '''
+    L ← Empty list that will contain the sorted elements
+    S ← Set of all nodes with no incoming edge
+
+    while S is not empty do
+        remove a node n from S
+        add n to L
+        for each node m with an edge e from n to m do
+            remove edge e from the graph
+            if m has no other incoming edges then
+                insert m into S
+
+    if graph has edges then
+        return error   (graph has at least one cycle)
+    else 
+        return L   (a topologically sorted order)
+    '''
+
+
+
 
     # 236. Lowest Common Ancestor of a Binary Tree (MED)
 
