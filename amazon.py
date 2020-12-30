@@ -778,19 +778,16 @@ class Solution:
         return max(l, r) + 1
 
     """
-    Arrays and Strings
+    Recursion
     """
+    # 17. Letter Combinations of a Phone Number
+        def letterCombinations(self, digits: str) -> List[str]:
+            ""
 
+            return
 
 
 solution = Solution()
 
-
-# [1,2,3,4,5]
-lr = TreeNode(5, None, None)
-ll = TreeNode(4, None, None)
-r = TreeNode(3, None, None)
-l = TreeNode(2, ll, lr)
-root = TreeNode(1, l, r)
-
-print(solution.diameterOfBinaryTree(root))
+digits = "23"
+print(solution.letterCombinations(digits))
