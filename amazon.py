@@ -778,9 +778,20 @@ class Solution:
         return max(l, r) + 1
 
     """
-    Arrays and Strings
+Recursion
     """
 
+    # 17. Letter Combinations of a Phone Number (MED)
+    def letterCombinations(self, digits: str) -> List[str]:
+        return
+
+    # 22. Generate Parentheses (MED)
+    def generateParenthesis(self, n: int) -> List[str]:
+        return
+    
+    # 79. Word Search (MED)
+    def exist(self, board: List[List[str]], word: str) -> bool:
+        return
 
 
 solution = Solution()
