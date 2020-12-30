@@ -29,14 +29,9 @@ class TreeNode:
         return str(self.val)
 
 class Course:
-    def __init__(self, prereqs: list):
-        self.prereqs = prereqs
-    
-    def __str__(self):
-        return str(self.prereqs)
-    
-    # def __eq__(self, other):
-    #     return other.prereqs == self.prereqs
+    def __init__(self):
+        self.inDegrees = 0
+        self.next = []
 
 class Solution:
     """
@@ -116,7 +111,7 @@ class Solution:
             
         return shortestDistance
     """
-Arrays and Strings
+    Arrays and Strings
     """
     # 1. Two Sum problem (EASY)
     def twoSum(self, nums: List[int], target: int) -> List[int]:
@@ -461,7 +456,7 @@ Arrays and Strings
         return firstNode
 
     """
-Trees and Graphs
+    Trees and Graphs
     """
     def BFS(self, root: TreeNode):
         queue = []
@@ -491,10 +486,8 @@ Trees and Graphs
     def DFSRecursive(self, root: TreeNode):
         if root:
             print(root.val)
-            if root.left: 
-                self.DFSRecursive(root.left)
-            if root.right:
-                self.DFSRecursive(root.right)
+            self.DFSRecursive(root.left)
+            self.DFSRecursive(root.right)
 
     '''
     def DFSAux(self, root: TreeNode, visited: dict):
@@ -682,8 +675,6 @@ Trees and Graphs
             rows.append(newRow)
         return rows
 
-    # 124. Binary Tree Maximum Path Sum (HARD)
-
     # 200. Number of Islands (MED)
     def numIslands(self, grid: List[List[str]]) -> int:
         islands = 0
@@ -732,108 +723,74 @@ Trees and Graphs
 
     # 207. Course Schedule (MED)
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        sorted = []
-        queue = []
+        values = []
+        nodes = {}
+        valuesExists = {}
+        totalEdges = 0
+        for list in prerequisites:
+            current, prereq = list[0], list[1]
+            if current not in values:
+                values.append(current)
+                valuesExists[current] = True
+            if current in nodes:
+                nodes[current].next.append(prereq)
+            else:
+                nodes[current] = Course()
+                nodes[current].next.append(prereq)
+            if prereq in nodes:
+                    nodes[prereq].inDegrees += 1
+            else:
+                nodes[prereq] = Course()
+                nodes[prereq].inDegrees += 1
+            totalEdges += 1
 
-        while queue:
-            queue.pop()
-
-
-        return True
-
-    '''
-    L ← Empty list that will contain the sorted elements
-    S ← Set of all nodes with no incoming edge
-
-    while S is not empty do
-        remove a node n from S
-        add n to L
-        for each node m with an edge e from n to m do
-            remove edge e from the graph
-            if m has no other incoming edges then
-                insert m into S
-
-    if graph has edges then
-        return error   (graph has at least one cycle)
-    else 
-        return L   (a topologically sorted order)
-    '''
-
-
-
+        noReq = []
+        for value in values:
+            if nodes[value].inDegrees == 0:
+                noReq.append(value)
+        removedEdges = 0
+        while noReq:
+            course = noReq.pop()
+            for prereq in nodes[course].next:
+                nodes[prereq].inDegrees -= 1
+                removedEdges += 1
+                if nodes[prereq].inDegrees == 0:
+                    noReq.append(prereq)
+        if removedEdges == totalEdges:
+            return True
+        else:
+            return False
 
     # 236. Lowest Common Ancestor of a Binary Tree (MED)
+    
 
     # 543. Diameter of Binary Tree (EASY)
     def diameterOfBinaryTree(self, root: TreeNode) -> int:
-        return
+        diameter = self.diameterOfBinaryTreeAux(root, 0)
+        return diameter - 1
 
-    def diameterOfBinaryTreeAux(self, root: TreeNode) -> int:
-        return
+    def diameterOfBinaryTreeAux(self, root: TreeNode, diameter: int) -> int:
+        if not root:
+            return 1
+        l = self.diameterOfBinaryTreeAux(root.left, diameter)
+        r = self.diameterOfBinaryTreeAux(root.right, diameter)
+        diameter = max(l + r + 1, diameter)
+        return max(l, r) + 1
 
-    # 675. Cut Off Trees for Golf Event (HARD)
+    """
+    Arrays and Strings
+    """
 
-    # 127. Word Ladder (MED)
-    def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
-        return
 
-    # Word Ladder 2
 
 solution = Solution()
 
 
-numCourse = 7
-prerequisites = [[1,0],[0,3],[0,2],[3,2],[2,5],[4,5],[5,6],[2,4]]
+# [1,2,3,4,5]
+lr = TreeNode(5, None, None)
+ll = TreeNode(4, None, None)
+r = TreeNode(3, None, None)
+l = TreeNode(2, ll, lr)
+root = TreeNode(1, l, r)
 
-print(solution.canFinish(numCourse, prerequisites))
-
-
-'''
-#          1
-#      2          3
-#   4    5     6     7
-# 8  9 10 11 12 13 14 15
-'''
-# rrr = TreeNode(15, None, None)
-# rrl = TreeNode(14, None, None)
-# rlr = TreeNode(13, None, None)
-# rll = TreeNode(12, None, None)
-# lrr = TreeNode(11, None, None)
-# lrl = TreeNode(10, None, None)
-# llr = TreeNode(9, None, None)
-# lll = TreeNode(8, None, None)
-# rr = TreeNode(7, rrl, rrr)
-# rl = TreeNode(6, rll, rlr)
-# lr = TreeNode(5, lrl, lrr)
-# ll = TreeNode(4, lll, llr)
-# r = TreeNode(3, rl, rr)
-# l = TreeNode(2, ll, lr)
-# root = TreeNode(1, l, r)
-
-# print("BFS: ")
-# print(solution.BFS(root))
-# print("\nDFS: ")
-# print(solution.DFSRecursive(root))
-# print("\nIn Order: ")
-# print(solution.inOrderTraversal(root))
-# print("\nPre Order: ")
-# print(solution.preOrderTraversal(root))
-# print("\nPost Order: ")
-# print(solution.postOrderTraversal(root))
-
-
-# grid = [
-#   ["1","1","1","1","0"],
-#   ["1","1","0","1","0"],
-#   ["1","1","0","0","0"],
-#   ["0","0","0","0","0"]
-# ]
-
-# grid = [
-#   ["1","1","0","0","0"],
-#   ["1","1","0","0","0"],
-#   ["0","0","1","0","0"],
-#   ["0","0","0","1","1"]
-# ]
-
-
+print(solution.diameterOfBinaryTree(root))

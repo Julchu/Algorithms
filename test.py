@@ -1,89 +1,52 @@
 # typing module needed for dictionaries (Lists)
+from collections import defaultdict, deque
 from typing import List
 
 class ListNode:
-    def __init__(self, val, next=None, visited=False):
-        self.val = val
-        self.next = [next]
-        self.visited = visited
+    def __init__(self):
+        self.inDegrees = 0
+        self.next = []
 
-    def __str__(self):
-        return "val: " + str(self.val) + " next: " + str(self.next) + " visited: " + str(self.visited)
+numCourse = 7
+prerequisites = [[1,0],[0,3],[0,2],[3,2],[2,5],[4,5],[5,6],[2,4]]
 
-numCourses = 7
-lists = [[1, 0], [0, 3], [0, 2], [3, 2], [2, 5], [4, 5], [5, 6], [2, 4]]
-print()
-
-# def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
 values = []
 nodes = {}
-
-for list in lists:
-    if list[0] in nodes:
-        nodes[list[0]].next.append(list[1])
+valuesExists = {}
+totalEdges = 0
+for list in prerequisites:
+    current, prereq = list[0], list[1]
+    if current not in values:
+        values.append(current)
+        valuesExists[current] = True
+    if current in nodes:
+        nodes[current].next.append(prereq)
     else:
-        values.append(list[0])
-        nodes[list[0]] = ListNode(list[0], list[1])
+        nodes[current] = ListNode()
+        nodes[current].next.append(prereq)
+    if prereq in nodes:
+            nodes[prereq].inDegrees += 1
+    else:
+        nodes[prereq] = ListNode()
+        nodes[prereq].inDegrees += 1
+    totalEdges += 1
 
-for list in lists:
-    stack = []
-    stack.append(nodes[list[0]])
-    while stack:
-        node = stack.pop()
-        print(node)
-        if node.visited:
-            print("")
-            break
-        node.visited = True
-        for n in node.next:
-            if n in nodes:
-                stack.append(nodes[n])
-    for value in values:
-        # print(nodes[value])
-        nodes[value].visited = False
-        # print(nodes[value])
-# return True
+noReq = []
+for value in values:
+    if nodes[value].inDegrees == 0:
+        noReq.append(value)
+removedEdges = 0
+while noReq:
+    course = noReq.pop()
+    for prereq in nodes[course].next:
+        nodes[prereq].inDegrees -= 1
+        removedEdges += 1
+        if nodes[prereq].inDegrees == 0:
+            noReq.append(prereq)
 
-def canFinish(self, numCourses, prerequisites):
-        """
-        :type numCourses: int
-        :type prerequisites: List[List[int]]
-        :rtype: bool
-        """
-        from collections import defaultdict, deque
-        # key: index of node; value: GNode
-        graph = defaultdict(GNode)
-
-        totalDeps = 0
-        for relation in prerequisites:
-            nextCourse, prevCourse = relation[0], relation[1]
-            graph[prevCourse].outNodes.append(nextCourse)
-            graph[nextCourse].inDegrees += 1
-            totalDeps += 1
-
-        # we start from courses that have no prerequisites.
-        # we could use either set, stack or queue to keep track of courses with no dependence.
-        nodepCourses = deque()
-        for index, node in graph.items():
-            if node.inDegrees == 0:
-                nodepCourses.append(index)
-
-        removedEdges = 0
-        while nodepCourses:
-            # pop out course without dependency
-            course = nodepCourses.pop()
-
-            # remove its outgoing edges one by one
-            for nextCourse in graph[course].outNodes:
-                graph[nextCourse].inDegrees -= 1
-                removedEdges += 1
-                # while removing edges, we might discover new courses with prerequisites removed, i.e. new courses without prerequisites.
-                if graph[nextCourse].inDegrees == 0:
-                    nodepCourses.append(nextCourse)
-
-        if removedEdges == totalDeps:
-            return True
-        else:
-            # if there are still some edges left, then there exist some cycles
-            # Due to the dead-lock (dependencies), we cannot remove the cyclic edges
-            return False
+if removedEdges == totalEdges:
+    # return True
+    print(True)
+else:
+    # return False
+    print(False)
