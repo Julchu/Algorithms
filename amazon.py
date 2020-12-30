@@ -778,22 +778,21 @@ class Solution:
         return max(l, r) + 1
 
     """
-Recursion
+Sorting and Searching
     """
-    # 17. Letter Combinations of a Phone Number (MED)
-    def letterCombinations(self, digits: str) -> List[str]:
-        return
+    # 4. Median of Two Sorted Arrays (HARD)
+        # The overall run time complexity should be O(log (m+n)).
+    def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:
 
-    # 22. Generate Parentheses (MED)
-    def generateParenthesis(self, n: int) -> List[str]:
-        return
-    
-    # 79. Word Search (MED)
-    def exist(self, board: List[List[str]], word: str) -> bool:
+        # Merge arrays
+
+        # Find median
+            # If even number 
+
         return
 
 
 solution = Solution()
 
-digits = "23"
-print(solution.letterCombinations(digits))
+nums1 = [1,3], nums2 = [2]
+print(solution.findMedianSortedArrays(nums1))
