@@ -1,5 +1,5 @@
 from typing import List
-import collections
+from collections import defaultdict, deque
 import math
 
 
@@ -780,19 +780,136 @@ class Solution:
     """
 Sorting and Searching
     """
-    # 4. Median of Two Sorted Arrays (HARD)
-        # The overall run time complexity should be O(log (m+n)).
+    # 4. Median of Two Sorted Arrays
+        # The overall run time complexity should be O(log (m+n)) (HARD)
     def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:
 
-        # Merge arrays
+        # Merge arrays into deque
+        merged = deque([], maxlen=(len(nums1) + len(nums2)))
+        while nums1 or nums2:
+            if nums1 and nums2:
+                if nums1[-1] > nums2[-1]:
+                    merged.appendleft(nums1.pop())
+                else:
+                    merged.appendleft(nums2.pop())
+            elif nums1:
+                merged.appendleft(nums1.pop())
+            else:
+                merged.appendleft(nums2.pop())
 
         # Find median
-            # If even number 
+            # if even number: take mid 2 and average
+            # else odd number: takase middle 
+        median = float()
+        n = len(merged)
+        if n % 2 == 0:
+            median = (merged[n//2] + merged[n//2-1]) / 2
+        else:
+            median = merged[n//2]
+        return median
+
+    # 215. Kth Largest Element in an Array
+    def findKthLargest(self, nums: List[int], k: int) -> int:
+        # Sort nums
+        
+        
+        # Loop backwards through k to find k-th largest element
+        return self.mergeSort(nums[0:len(nums)//2], nums[len(nums)//2:len(nums)])
+        
+
+    def mergeSort(self, left=[], right=[]):
+        if len(left) == 0 or len(right) == 0:
+            return left + right
+        elif len(left) == :
+        
+        elif 
+
+
 
         return
+
+    def mergeSort(arr):
+    if len(arr) > 1:
+        mid = len(arr)//2
+        L = arr[:mid]
+        R = arr[mid:]
+        mergeSort(L)
+        mergeSort(R)
+ 
+        i = j = k = 0
+ 
+        while i < len(L) and j < len(R):
+            if L[i] < R[j]:
+                arr[k] = L[i]
+                i += 1
+            else:
+                arr[k] = R[j]
+                j += 1
+            k += 1
+ 
+
+        while i < len(L):
+            arr[k] = L[i]
+            i += 1
+            k += 1
+ 
+        while j < len(R):
+            arr[k] = R[j]
+            j += 1
+            k += 1
+
+
+
+
 
 
 solution = Solution()
 
-nums1 = [1,3], nums2 = [2]
-print(solution.findMedianSortedArrays(nums1))
+nums = [3,2,1,5,6]
+k = 2
+print(solution.findKthLargest(nums, k))
+
+'''
+
+void TopDownMergeSort(A[], B[], n)
+{
+    CopyArray(A, 0, n, B);           // one time copy of A[] to B[]
+    TopDownSplitMerge(B, 0, n, A);   // sort data from B[] into A[]
+}
+
+void TopDownSplitMerge(B[], iBegin, iEnd, A[])
+{
+    if(iEnd - iBegin <= 1) 
+        return;
+    iMiddle = (iEnd + iBegin) / 2;              // iMiddle = mid point
+	
+    TopDownSplitMerge(A, iBegin,  iMiddle, B);  // sort the left  run
+    TopDownSplitMerge(A, iMiddle,    iEnd, B);  // sort the right run
+	
+    TopDownMerge(B, iBegin, iMiddle, iEnd, A);
+}
+
+
+void TopDownMerge(A[], iBegin, iMiddle, iEnd, B[])
+{
+    i = iBegin, j = iMiddle;
+ 
+    for (k = iBegin; k < iEnd; k++) {
+
+        if (i < iMiddle && (j >= iEnd || A[i] <= A[j])) {
+            B[k] = A[i];
+            i = i + 1;
+        } else {
+            B[k] = A[j];
+            j = j + 1;
+        }
+    }
+}
+
+void CopyArray(A[], iBegin, iEnd, B[])
+{
+    for(k = iBegin; k < iEnd; k++)
+        B[k] = A[k];
+}
+
+'''
