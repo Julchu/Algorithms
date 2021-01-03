@@ -1,3 +1,4 @@
+import random
 from typing import List
 from collections import defaultdict, deque
 import math
@@ -780,6 +781,31 @@ class Solution:
     """
 Sorting and Searching
     """
+    
+    # 33. Search in Rotated Sorted Array (MED)
+    def search(self, nums: List[int], target: int) -> int:
+        return
+
+    # 56. Merge Intervals (MED)
+    def merge(self, intervals: List[List[int]]) -> List[List[int]]:
+        return
+
+    # 167. Two Sum II - Input array is sorted (EASY)
+    def twoSum2(self, numbers: List[int], target: int) -> List[int]:
+        return
+
+    # 253. Meeting Rooms II (MED)
+    def minMeetingRooms(self, intervals: List[List[int]]) -> int:
+        return
+
+    # 347. Top K Frequent Elements (MED)
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        return
+
+    # 973. K Closest Points to Origin (MED)
+    def kClosest(self, points: List[List[int]], K: int) -> List[List[int]]:
+        return
+
     # 4. Median of Two Sorted Arrays
         # The overall run time complexity should be O(log (m+n)) (HARD)
     def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:
@@ -808,108 +834,110 @@ Sorting and Searching
             median = merged[n//2]
         return median
 
-    # 215. Kth Largest Element in an Array
+    # 215. Kth Largest Element in an Array (MED) method 1 (merge sort: O(n log n)
     def findKthLargest(self, nums: List[int], k: int) -> int:
-        # Sort nums
-        
-        
+        # Sort nums w/ merge sort
+        nums = self.mergeSort(nums)
         # Loop backwards through k to find k-th largest element
-        return self.mergeSort(nums[0:len(nums)//2], nums[len(nums)//2:len(nums)])
-        
+        return nums[-k]
 
-    def mergeSort(self, left=[], right=[]):
-        if len(left) == 0 or len(right) == 0:
-            return left + right
-        elif len(left) == :
-        
-        elif 
+    def mergeSort(self, nums: List[int]) -> List[int]:
+        # Split
+        m = len(nums)//2
+        l = nums[:m]
+        r = nums[m:]
 
+        if len(nums) > 1:
+            self.mergeSort(l)
+            self.mergeSort(r)
 
+            # Merge
+            self.mergeSortMerge(l, r, nums)
+        return nums
 
-        return
-
-    def mergeSort(arr):
-    if len(arr) > 1:
-        mid = len(arr)//2
-        L = arr[:mid]
-        R = arr[mid:]
-        mergeSort(L)
-        mergeSort(R)
- 
+    def mergeSortMerge(self, l: List[int], r: List[int], nums: List[int]) -> List[int]:
         i = j = k = 0
- 
-        while i < len(L) and j < len(R):
-            if L[i] < R[j]:
-                arr[k] = L[i]
+        while i < len(l) and j < len(r):
+            if l[i] < r[j]:
+                nums[k] = l[i]
                 i += 1
             else:
-                arr[k] = R[j]
+                nums[k] = r[j]
                 j += 1
             k += 1
- 
-
-        while i < len(L):
-            arr[k] = L[i]
+        while i < len(l):
+            nums[k] = l[i]
             i += 1
             k += 1
- 
-        while j < len(R):
-            arr[k] = R[j]
+        while j < len(r):
+            nums[k] = r[j]
             j += 1
             k += 1
+        return nums
 
+    # 215. Kth Largest Element in an Array (MED) method 2 (selection sort: O(k * n))
+    def findKthLargest2(self, nums: List[int], k: int) -> int:
+        max = 0
+        for _ in range(k):
+            current = 0
+            if nums:
+                max = nums[0]
+            for i in range(len(nums)):
+                if nums[i] > max:
+                    max = nums[i]
+                    current = i
+            nums.pop(current)
+        return max
 
+    def findKthLargest3(self, nums: List[int], k: int) -> int:
+        kthSmallest = self.quickSelect(nums, 0, len(nums)-1, len(nums)-k)
+        return kthSmallest
+    
+    def quickSort(self, nums: List[int], low: int, high: int) -> List[int]:
+        if low < high:
+            # Divide
+            index = self.partition(nums, low, high)
 
+            # Conquer
+            self.quickSort(nums, low, index-1)
+            self.quickSort(nums, index+1, high)
 
+        return nums
+    
+    def quickSelect(self, nums: List[int], low: int, high: int, k: int):
+        index = self.partition(nums, low, high)
+        
+        if index == k:
+            return nums[index]
+        elif index < k:
+            return self.quickSelect(nums, low, index-1, k)
+        else:
+            return self.quickSelect(nums, index+1, high, k)
 
+    def partition(self, nums, low, high) -> int:
+        # pivot = nums[high]
+
+        # mid = (low + high)//2
+        # pivot = nums[mid]
+        # nums[mid], nums[high] = nums[high], nums[mid]
+        
+        rand = random.randint(low, high)
+        pivot = nums[rand]
+        nums[rand], nums[high] = nums[high], nums[rand]
+
+        index = low
+        for i in range(low, high):
+            if nums[i] <= pivot:
+                nums[index], nums[i] = nums[i], nums[index]
+                index += 1
+        nums[index], nums[high] = nums[high], nums[index]
+
+        return index
 
 solution = Solution()
+nums = [3,2,3,1,2,4,5,5,6]
+# nums = [5, 4, 1, 2, 3]
+k = 5
 
-nums = [3,2,1,5,6]
-k = 2
-print(solution.findKthLargest(nums, k))
-
-'''
-
-void TopDownMergeSort(A[], B[], n)
-{
-    CopyArray(A, 0, n, B);           // one time copy of A[] to B[]
-    TopDownSplitMerge(B, 0, n, A);   // sort data from B[] into A[]
-}
-
-void TopDownSplitMerge(B[], iBegin, iEnd, A[])
-{
-    if(iEnd - iBegin <= 1) 
-        return;
-    iMiddle = (iEnd + iBegin) / 2;              // iMiddle = mid point
-	
-    TopDownSplitMerge(A, iBegin,  iMiddle, B);  // sort the left  run
-    TopDownSplitMerge(A, iMiddle,    iEnd, B);  // sort the right run
-	
-    TopDownMerge(B, iBegin, iMiddle, iEnd, A);
-}
-
-
-void TopDownMerge(A[], iBegin, iMiddle, iEnd, B[])
-{
-    i = iBegin, j = iMiddle;
- 
-    for (k = iBegin; k < iEnd; k++) {
-
-        if (i < iMiddle && (j >= iEnd || A[i] <= A[j])) {
-            B[k] = A[i];
-            i = i + 1;
-        } else {
-            B[k] = A[j];
-            j = j + 1;
-        }
-    }
-}
-
-void CopyArray(A[], iBegin, iEnd, B[])
-{
-    for(k = iBegin; k < iEnd; k++)
-        B[k] = A[k];
-}
-
-'''
+# print(solution.quickSort(nums, 0, len(nums)-1))
+print(solution.findKthLargest3(nums, k))
