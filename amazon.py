@@ -34,6 +34,86 @@ class Course:
         self.inDegrees = 0
         self.next = []
 
+class DNode:
+    def __init__(self, key, value, left, right):
+        self.key = key
+        self.value = value
+        self.left = left       
+        self.right = right
+
+    def __str__(self) -> str:
+        return str(self.key) + ": " + str(self.value) 
+
+class LRUCache:
+    def __init__(self, capacity: int):
+        self.capacity = capacity
+        self.cache = {}
+        self.first = None
+        self.last = None
+    
+    def __str__(self) -> str:
+        return str(self.cache)
+
+    def get(self, key: int) -> int:
+        # If key in cache
+        if key in self.cache:
+            self.moveToBack(key)
+            return self.cache[key].value
+
+        # Else:
+        else:
+            return -1
+
+    def put(self, key: int, value: int) -> None:
+        # Key exists
+        if key in self.cache:
+            self.moveToBack(key)
+            self.cache[key].value = value
+
+        # New key
+        else:
+            # Maxed
+            if len(self.cache) == self.capacity:
+                # Create new node and put into cache
+                self.cache[key] = DNode(key, value, self.cache[self.last], self.cache[self.first].right)
+
+                # Set last to new node
+                self.cache[self.last].right = self.cache[key]
+                
+                # Set first.right'left to new node (last)
+                self.cache[self.first].right.left = self.cache[key]
+
+                # Remove first
+                first = self.cache.pop(self.first)
+
+                # Set first to first.right
+                self.first = first.right.key
+
+            # Not maxed
+            else:
+                # Empty
+                if len(self.cache) == 0:
+                    self.first = key
+                    self.cache[key] = DNode(key, value, None, None)
+
+                # Not empty
+                else:
+                    self.cache[key] = DNode(key, value, self.cache[self.last], self.cache[self.first])
+                    self.cache[self.first].left = self.cache[key]
+                    self.cache[self.last].right = self.cache[key]
+            self.last = key
+
+    def moveToBack(self, key) -> None:
+        self.cache[self.first].left = self.cache[self.last].right = self.cache[key]
+        self.cache[key].left.right, self.cache[key].right.left = self.cache[key].right, self.cache[key].left
+        self.cache[key].right = self.cache[self.first]
+        self.cache[key].left = self.cache[self.last]
+        self.last = key
+
+        # If key was also first
+        if self.first == key:
+            self.first = self.cache[self.first].right.key
+
 class Solution:
     """
     Online Assessment Q1
@@ -917,13 +997,11 @@ Sorting and Searching
     def partition(self, nums, low, high) -> int:
         # pivot = nums[high]
 
-        # mid = (low + high)//2
-        # pivot = nums[mid]
-        # nums[mid], nums[high] = nums[high], nums[mid]
+        index = (low + high)//2
+        # index = random.randint(low, high)
         
-        rand = random.randint(low, high)
-        pivot = nums[rand]
-        nums[rand], nums[high] = nums[high], nums[rand]
+        pivot = nums[index]
+        nums[index], nums[index] = nums[index], nums[index]
 
         index = low
         for i in range(low, high):
@@ -933,6 +1011,32 @@ Sorting and Searching
         nums[index], nums[high] = nums[high], nums[index]
 
         return index
+
+
+
+lRUCache = LRUCache(2)
+print(lRUCache.put(1, 1))
+print(lRUCache.put(2, 2))
+print(lRUCache.get(1))
+print(lRUCache.put(3, 3))
+print(lRUCache.get(2))
+print(lRUCache.put(4, 4))
+print(lRUCache.get(1))
+print(lRUCache.get(3))
+print(lRUCache.get(4))
+
+'''
+None
+None
+1
+None
+-1
+None
+-1
+3
+4
+'''
+
 
 solution = Solution()
 nums = [3,2,3,1,2,4,5,5,6]
