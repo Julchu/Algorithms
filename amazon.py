@@ -113,6 +113,28 @@ class LRUCache:
         # If key was also first
         if self.first == key:
             self.first = self.cache[self.first].right.key
+    '''
+    lRUCache = LRUCache(2)
+    print(lRUCache.put(1, 1))
+    print(lRUCache.put(2, 2))
+    print(lRUCache.get(1))
+    print(lRUCache.put(3, 3))
+    print(lRUCache.get(2))
+    print(lRUCache.put(4, 4))
+    print(lRUCache.get(1))
+    print(lRUCache.get(3))
+    print(lRUCache.get(4))
+
+    None
+    None
+    1
+    None
+    -1
+    None
+    -1
+    3
+    4
+    '''
 
 class Solution:
     """
@@ -1012,36 +1034,76 @@ Sorting and Searching
 
         return index
 
+    def orangesRotting(self, grid: List[List[int]]) -> int:
+        visited = []
+        timer = 0
+        for i in range(len(grid)):
+            visited.append([False] * len(grid[i]))
+        
+        for i in range(len(grid)):
+            for j in range(len(grid[i])):
+                if visited[i][j] == False and grid[i][j] == 2:
+                    visited[i][j] = True
+                    timer = self.BFSOranges(grid, visited, i, j, timer)
+        for i in range(len(grid)):
+            for j in range(len(grid[i])):
+                if grid[i][j] == 1:
+                    return -1
+        print(grid)
+        return timer
+    
+    def BFSOranges(self, grid, visited, i, j, timer):
+        queue = []
+        queue.append([i, j])
+        
+        while queue:
+            rotten = False
+            coords = queue.pop(0)
+            row = coords[0]
+            col = coords[1]
+            
+            
+            # Left
+            if col > 0:
+                if grid[row][col-1] == 1 and visited[row][col-1] == False:
+                    grid[row][col-1] = 2
+                    visited[row][col-1] = True
+                    queue.append([row, col-1])
+                    rotten = True
+            if col < len(grid[0]) - 1:
+                # Right
+                if grid[row][col+1] == 1 and visited[row][col+1] == False:
+                    grid[row][col+1] = 2
+                    visited[row][col+1] = True
+                    queue.append([row, col+1])
+                    rotten = True
+            
+            if row > 0:
+                # Top
+                if grid[row-1][col] == 1 and visited[row-1][col] == False:
+                    grid[row-1][col] = 2
+                    visited[row-1][col] = True
+                    queue.append([row-1, col])
+                    rotten = True
+            if row < len(grid) - 1:
+                # Bot
+                if grid[row+1][col] == 1 and visited[row+1][col] == False:
+                    grid[row+1][col] = 2
+                    visited[row+1][col] = True
+                    queue.append([row+1, col])
+                    rotten = True
 
-
-lRUCache = LRUCache(2)
-print(lRUCache.put(1, 1))
-print(lRUCache.put(2, 2))
-print(lRUCache.get(1))
-print(lRUCache.put(3, 3))
-print(lRUCache.get(2))
-print(lRUCache.put(4, 4))
-print(lRUCache.get(1))
-print(lRUCache.get(3))
-print(lRUCache.get(4))
-
-'''
-None
-None
-1
-None
--1
-None
--1
-3
-4
-'''
+            if rotten:
+                timer += 1
+                rotten = False
+        return timer
 
 
 solution = Solution()
-nums = [3,2,3,1,2,4,5,5,6]
-# nums = [5, 4, 1, 2, 3]
+# grid = [[2,1,1],[1,1,0],[0,1,1]]
+# grid = [[2,1,1],[0,1,1],[1,0,1]]
+# grid = [[0,2]]
+grid = [[2,1,1],[1,1,1],[0,1,2]]
 k = 5
 
-# print(solution.quickSort(nums, 0, len(nums)-1))
-print(solution.findKthLargest3(nums, k))
+print(solution.orangesRotting(grid))
