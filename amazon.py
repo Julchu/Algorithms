@@ -288,7 +288,46 @@ class Solution:
             groups.append(strsDict[str])
         return groups
 
-    # 42. Trapping Rain Water (HARD)
+    # 42. Trapping Rain Water (HARD) Official solution
+    def trap(self, height: List[int]) -> int:
+        ans = current = 0
+        stack = []
+        while current < len(height):
+            top = stack.pop()
+            while stack and height[current] > top:
+                if not stack:
+                    break
+                distance = current - stack[-1] - 1
+                bounded_height = min(height[current], height[stack[-1]]) - height[top]
+                ans += distance * bounded_height
+            current += 1
+            stack.append(current)
+        
+        return ans
+
+
+    # 238. Product of Array Except Self (MED) Official solution
+    def productExceptSelf(self, nums: List[int]) -> List[int]:
+        
+        length = len(nums)
+        
+        L, R, answer = [0]*length, [0]*length, [0]*length
+
+        L[0] = 1
+        for i in range(1, length):
+            
+            L[i] = nums[i - 1] * L[i - 1]
+        
+        R[length - 1] = 1
+        for i in reversed(range(length - 1)):
+            R[i] = nums[i + 1] * R[i + 1]
+        
+        # Constructing the answer array
+        for i in range(length):
+
+            answer[i] = L[i] * R[i]
+        
+        return answer
 
     # 273. Integer to English Words (HARD)
     # Unfinished, but conceptually working
